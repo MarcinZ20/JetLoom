@@ -1,0 +1,14 @@
+.card {
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    max-width: 1400px;
+    margin: 0 auto;
+}

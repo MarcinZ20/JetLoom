@@ -1,0 +1,58 @@
+<div class="wrap">
+    <div *ngFor="let trip of tripsData.trips">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="../../assets/images/island.jpg" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content block">
+          <p class="title is-3">{{ trip.TripName }}</p>
+          <p class="subtitle is-5">{{ trip.Destination }}</p>
+          <div class="content block">
+            <p>{{ trip.Description }}</p>
+            <span class="has-text-weight-bold">Data rozpoczęcia: </span>
+            <time datetime="01/01/2020">{{trip.StartDate}}</time> 
+            <br>
+            <span class="has-text-weight-bold">Data zakończenia: </span>
+            <time datetime="01/01/2020">{{trip.EndDate}}</time>
+            <hr>
+            <p class="title">Cena: 
+              <span class="has-text-primary">
+                {{ trip.Price }}zł
+              </span>
+            </p>
+            <a href="#">#{{ trip.Destination }}</a> 
+            <a href="#">#Fun</a>
+            <a href="#">#Vacation</a>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a href="#" class="card-footer-item">
+            <span class="icon-text">
+              <span>Buy</span>
+              <span class="icon">
+                <fa-icon [icon]="faShoppingBasket"></fa-icon>
+              </span>
+            </span>
+          </a>
+          <a href="#" class="card-footer-item">
+            <span class="icon-text">
+              <span>Save</span>
+              <span class="icon">
+                <fa-icon [icon]="faHeart"></fa-icon>
+              </span>
+            </span>
+          </a>
+          <a href="#" class="card-footer-item">
+            <span class="icon-text">
+              <span>Share</span>
+              <span class="icon">
+                <fa-icon [icon]="faShare"></fa-icon>
+              </span>
+            </span>
+          </a>
+        </footer>
+      </div>
+    </div>
+</div>
