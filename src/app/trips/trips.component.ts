@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Trips } from '../trips';
-import { TripComponent } from '../trip/trip.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {  } from './trip/trip.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart, faShare, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-// import { getDataService } from "../../services/getDataService";
+import { GetTripsService } from '../get-trips.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-trips',
   standalone: true,
-  imports: [NgFor, HttpClientModule, FontAwesomeModule, TripComponent],
+  imports: [NgFor, FontAwesomeModule, HttpClientModule],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
+  providers: [GetTripsService, HttpClientModule]
 })
 
-export class TripsComponent {
+export class TripsComponent implements OnInit {
   // Data
   tripsData: Trips;
 
@@ -24,16 +25,16 @@ export class TripsComponent {
   faShare = faShare;
   faHeart = faHeart;
 
-  constructor(
-    private http: HttpClient) { 
-    this.tripsData = new Trips();
-    // this.tripsData = service.fetchTrips();
-    this.fetchTrips();
+  constructor(private service: GetTripsService) {
   }
 
-  fetchTrips(path: string = "../../assets/data/trips.json") {
-    this.http.get<Trips>(path)
-      .subscribe((data: Trips) => {
+  ngOnInit() {
+    this.getTrips();
+  }
+
+  getTrips() {
+    this.service.fetchTrips().subscribe(
+      (data: Trips) => {
         this.tripsData = data;
       }
     );

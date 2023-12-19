@@ -1,4 +1,5 @@
 export interface Trip {
+    id: number;
     TripName: string;
     Destination: string;
     StartDate: string;
@@ -8,5 +9,5 @@ export interface Trip {
     Description: string;
     Image: string;
 
-    initialize(name: string, destination: string, startDate: string, endDate: string, price: number, maxCapacity: number, description: string, image: string): void;
+    // initialize(id: number, name: string, destination: string, startDate: string, endDate: string, price: number, maxCapacity: number, description: string, image: string): void;
 }

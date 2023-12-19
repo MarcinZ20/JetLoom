@@ -1,6 +1,7 @@
 {
     "trips": [
       {
+        "id": 1,
         "TripName": "Wakacje nad Morzem Śródziemnym",
         "Destination": "Hiszpania",
         "StartDate": "2023-06-15",
@@ -11,6 +12,7 @@
         "Image": "https://example.com/wakacje.jpg"
       },
       {
+        "id": 2,
         "TripName": "Zimowa przygoda w Alpach",
         "Destination": "Szwajcaria",
         "StartDate": "2023-01-10",
@@ -21,6 +23,7 @@
         "Image": "https://example.com/zimowa_przygoda.jpg"
       },
       {
+        "id": 3,
         "TripName": "Egzotyczna przygoda na Bali",
         "Destination": "Indonezja",
         "StartDate": "2023-08-01",
@@ -31,6 +34,7 @@
         "Image": "https://example.com/bali_przygoda.jpg"
       },
       {
+        "id": 4,
         "TripName": "Safari w Parku Narodowym Serengeti",
         "Destination": "Tanzania",
         "StartDate": "2023-09-05",
@@ -41,6 +45,7 @@
         "Image": "https://example.com/safari_serengeti.jpg"
       },
       {
+        "id": 5,
         "TripName": "Wycieczka do Wielkich Jezior USA",
         "Destination": "Stany Zjednoczone",
         "StartDate": "2023-07-10",
@@ -51,6 +56,7 @@
         "Image": "https://example.com/wielkie_jeziora.jpg"
       },
       {
+        "id": 6,
         "TripName": "Wspinaczka po Himalajach",
         "Destination": "Nepal",
         "StartDate": "2023-03-15",
@@ -61,6 +67,7 @@
         "Image": "https://example.com/himalaje_wspinaczka.jpg"
       },
       {
+        "id": 7,
         "TripName": "Rowerowa wyprawa po Dolinie Loary",
         "Destination": "Francja",
         "StartDate": "2023-05-10",
@@ -71,6 +78,7 @@
         "Image": "https://example.com/loara_rower.jpg"
       },
       {
+        "id": 8,
         "TripName": "Wakacje na białych plażach Hawajów",
         "Destination": "Stany Zjednoczone",
         "StartDate": "2023-09-01",
@@ -81,6 +89,7 @@
         "Image": "https://example.com/hawaje_plaze.jpg"
       },
       {
+        "id": 9,
         "TripName": "Wycieczka do Machu Picchu",
         "Destination": "Peru",
         "StartDate": "2023-04-10",
@@ -91,6 +100,7 @@
         "Image": "https://example.com/machu_picchu.jpg"
       },
       {
+        "id": 10,
         "TripName": "Jaskinie Krasu w Słowenii",
         "Destination": "Słowenia",
         "StartDate": "2023-07-05",
@@ -101,6 +111,7 @@
         "Image": "https://example.com/jaskinie_kras.jpg"
       },
       {
+        "id": 11,
         "TripName": "Wędrówka po Wielkim Murze Chińskim",
         "Destination": "Chiny",
         "StartDate": "2023-05-01",
@@ -111,6 +122,7 @@
         "Image": "https://example.com/wielki_mur.jpg"
       },
       {
+        "id": 12,
         "TripName": "Wakacje na Karaibach",
         "Destination": "Bahamy",
         "StartDate": "2023-08-20",
@@ -121,6 +133,7 @@
         "Image": "https://example.com/karaiby_wakacje.jpg"
       },
       {
+        "id": 13,
         "TripName": "Wycieczka po starożytnych ruinach Grecji",
         "Destination": "Grecja",
         "StartDate": "2023-06-01",
@@ -131,6 +144,7 @@
         "Image": "https://example.com/grecja_ruiny.jpg"
       },
       {
+        "id": 14,
         "TripName": "Wakacje pod palmami na Malediwach",
         "Destination": "Malediwy",
         "StartDate": "2023-10-01",
@@ -141,6 +155,7 @@
         "Image": "https://example.com/malediwy_wakacje.jpg"
       },
       {
+        "id": 15,
         "TripName": "Podróż do historycznych miast Italii",
         "Destination": "Włochy",
         "StartDate": "2023-04-01",
@@ -151,6 +166,7 @@
         "Image": "https://example.com/italia_podroz.jpg"
       },
       {
+        "id": 16,
         "TripName": "Wycieczka po Parku Narodowym Yellowstone",
         "Destination": "Stany Zjednoczone",
         "StartDate": "2023-07-01",
@@ -161,6 +177,7 @@
         "Image": "https://example.com/yellowstone.jpg"
       },
       {
+        "id": 17,
         "TripName": "Wakacje na białych plażach Zanzibaru",
         "Destination": "Tanzania",
         "StartDate": "2023-09-15",
@@ -171,6 +188,7 @@
         "Image": "https://example.com/zanzibar_plaze.jpg"
       },
       {
+        "id": 18,
         "TripName": "Szlakiem lodowców Patagonii",
         "Destination": "Argentyna",
         "StartDate": "2023-01-25",
@@ -181,6 +199,7 @@
         "Image": "https://example.com/patagonia_lodowce.jpg"
       },
       {
+        "id": 19,
         "TripName": "Wakacje na Hawajach",
         "Destination": "Stany Zjednoczone",
         "StartDate": "2023-10-15",
@@ -191,6 +210,7 @@
         "Image": "https://example.com/hawaje_wakacje.jpg"
       },
       {
+        "id": 20,
         "TripName": "Podróż śladami starożytnych cywilizacji Egiptu",
         "Destination": "Egipt",
         "StartDate": "2023-05-20",
@@ -201,6 +221,7 @@
         "Image": "https://example.com/egipt_cywilizacje.jpg"
       },
       {
+        "id": 21,
         "TripName": "Wycieczka po Rzece Amazonce",
         "Destination": "Brazylia",
         "StartDate": "2023-02-01",

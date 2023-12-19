@@ -1,8 +1,10 @@
-import { Component, Inject} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { Trip } from '../trip';
+import { ActivatedRoute } from '@angular/router';
+import { Trip } from '../../trip';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart, faShare, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { GetTripsService } from '../../get-trips.service';
 
 @Component({
   selector: 'app-trip',
@@ -14,6 +16,7 @@ import { faHeart, faShare, faShoppingCart } from '@fortawesome/free-solid-svg-ic
 
 export class TripComponent implements Trip {
   // Properties
+  id: number;
   TripName: string;
   Destination: string;
   StartDate: string;
@@ -28,9 +31,10 @@ export class TripComponent implements Trip {
   faShare = faShare;
   faHeart = faHeart;
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   initialize(
+    id: number,
     tripName: string, 
     destination: string, 
     startDate: string, 
@@ -39,6 +43,7 @@ export class TripComponent implements Trip {
     maxCapacity: number, 
     description: string, 
     image: string) { 
+    this.id = id;
     this.TripName = tripName;
     this.Destination = destination;
     this.StartDate = startDate;
