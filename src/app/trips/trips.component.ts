@@ -12,7 +12,7 @@ import { faHeart, faShare, faShoppingCart } from '@fortawesome/free-solid-svg-ic
   standalone: true,
   imports: [NgFor, HttpClientModule, FontAwesomeModule, TripComponent],
   templateUrl: './trips.component.html',
-  styleUrl: './trips.component.css'
+  styleUrl: './trips.component.css',
 })
 
 export class TripsComponent {
