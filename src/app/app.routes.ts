@@ -4,6 +4,8 @@ import { TripComponent } from './trip/trip.component';
 import { TripsComponent } from './trips/trips.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -11,6 +13,8 @@ export const routes: Routes = [
     { path: 'trip', component: TripComponent },
     { path: 'trip/:id', component: TripComponent },
     {path: 'contact', component: ContactComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: ErrorPageComponent }
 ];

@@ -1,7 +1,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="../../assets/images/logos/logo.png" width="112" height="28">
+      <a class="navbar-item" [routerLink]="['/home']">
+        <img src="../../assets/images/logos/logo.png" width="112" height="50">
       </a>
   
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -13,11 +13,11 @@
   
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item">
+        <a class="navbar-item" [routerLink]="['/home']">
           Home
         </a>
   
-        <a class="navbar-item">
+        <a class="navbar-item" [routerLink]="['/trips']">
           Trips
         </a>
   
@@ -27,14 +27,14 @@
           </a>
   
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <a class="navbar-item" [routerLink]="['/about']">
               About
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" [routerLink]="['/contact']">
               Contact
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a class="navbar-item" [routerLink]="['/contact']">
               Report an issue
             </a>
           </div>
@@ -44,10 +44,10 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
+            <a class="button is-primary" [routerLink]="['/register']">
               <strong>Sign up</strong>
             </a>
-            <a class="button is-light">
+            <a class="button is-light" [routerLink]="['/login']">
               Log in
             </a>
           </div>

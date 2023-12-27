@@ -1,0 +1,37 @@
+<section class="section is-large">
+    <div class="box form-content">
+        <div class="content">
+            <p class="title is-2">Sign In</p>
+            <p class="subtitle">Only one step from your account!</p>
+        </div>
+        <form action="" method="post">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input" type="email" placeholder="Email">
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                  </span>
+                  <span class="icon is-small is-right">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </span>
+                </div>
+            </div>
+            <div class="field">
+                <label for="password" class="label">Password</label>
+                <div class="control has-icons-left">
+                    <input type="password" name="password" id="password" class="input" placeholder="Password">
+                    <span class="icon is-small is-left">
+                        <fa-icon [icon]="faKey"></fa-icon>
+                      </span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary">Sign in</button>
+                </div>
+            </div>
+            Don't have an account? <a href="/register">Register</a>
+        </form>
+    </div>
+</section>
