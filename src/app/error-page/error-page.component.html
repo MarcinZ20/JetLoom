@@ -1,1 +1,23 @@
-<p>error-page works!</p>
+<section class="hero is-large">
+    <div class="hero-body">
+        <div class="container is-widescreen">
+            <h1 class="title is-size-1 has-text-info">
+                404
+            </h1>
+            <h2 class="subtitle">
+                Oops! Page not found.
+            </h2>
+            <p class="block">
+                Sorry, the page you're looking for doesn't exist. If you think something is broken, report a problem.
+            </p>
+            <div class="block buttons are-medium">
+                <button class="button is-responsive is-info" [routerLink]="['/home']">
+                    RETURN HOME
+                </button>
+                <button class="button is-responsive is-info is-light" [routerLink]="['/contact']">
+                    REPORT PROBLEM
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
