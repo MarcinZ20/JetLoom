@@ -8,5 +8,5 @@ section.container {
 }
 
 nav.level .level-item a.subtitle:hover {
-    color: rgba(107, 107, 107, 0.737);
+    color: hsl(229, 53%,  53%)
 }

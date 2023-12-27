@@ -1,58 +1,49 @@
-<div class="card">
-    <div class="card-image">
-        <figure class="image is-4by3">
-            <img src={{Image}} alt="Placeholder image">
-        </figure>
+<section class="hero block is-halfheight frame">
+    <div class="hero-body">
+      <div class="">
+        <p class="title is-1 has-text-white">
+         Title
+        </p>
+        <p class="subtitle has-text-white">
+          Half height subtitle
+        </p>
+      </div>
     </div>
-    <div class="card-content">
-        <p class="title is-3">{{ TripName }}</p>
-        <p class="subtitle is-5">{{ Destination }}</p>
-        <div class="content">
-            {{ Description }}
-            <br>
-            <br>
-            <span class="has-text-weight-bold">Data rozpoczęcia: </span>
-            <time datetime="01/01/2020">{{StartDate}}</time> 
-            <br>
-            <span class="has-text-weight-bold">Data zakończenia: </span>
-            <time datetime="01/01/2020">{{EndDate}}</time>
-            <br>
-            <br>
-            <hr>
-            <p class="title">Cena: 
-                <span class="has-text-primary">
-                {{ Price }}zł
-                </span>
-            </p>
-            <a href="#">#{{ Destination }}</a> 
-            <a href="#">#Fun</a>
-            <a href="#">#Vacation</a>
-        </div>
+  </section>
+<section class="container">
+    <div class="tabs">
+        <ul>
+          <li class="is-active"><a>Overview</a></li>
+          <li><a>Description</a></li>
+          <li><a>Attractions</a></li>
+          <li><a>Details</a></li>
+        </ul>
     </div>
-    <footer class="card-footer">
-        <a href="#" class="card-footer-item">
-            <span class="icon-text">
-                <span>Buy</span>
-                <span class="icon">
-                    <fa-icon [icon]="faShoppingBasket"></fa-icon>
-                </span>
-            </span>
-        </a>
-        <a href="#" class="card-footer-item">
-            <span class="icon-text">
-                <span>Save</span>
-                <span class="icon">
-                    <fa-icon [icon]="faHeart"></fa-icon>
-                </span>
-            </span>
-        </a>
-        <a href="#" class="card-footer-item">
-            <span class="icon-text">
-                <span>Share</span>
-                <span class="icon">
-                    <fa-icon [icon]="faShare"></fa-icon>
-                </span>
-            </span>
-        </a>
-    </footer>
-</div>
+
+    <!-- Overview -->
+    <div class="container box">
+        <p class="subtitle">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+            Date:
+        </p>
+        <p class="subtitle">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+            Price:
+        </p>
+    </div>
+
+    <!-- Description -->
+    <div class="container box is-hidden">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quam alias adipisci voluptatibus est quae aliquam fugiat fuga numquam, consequatur, nostrum qui debitis! Error perferendis non distinctio inventore. Ad, distinctio.
+    </div>
+
+    <!-- Trip Attractions -->
+    <div class="container box is-hidden">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quidem ullam! Neque inventore ea molestias ipsum perferendis. Quidem excepturi fugit consectetur unde, voluptatum nisi laboriosam, totam, id quisquam natus ab.</p>
+    </div>
+
+    <!-- Trip Details -->
+    <div class="container box is-hidden">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quidem ullam! Neque inventore ea molestias ipsum perferendis. Quidem excepturi fugit consectetur unde, voluptatum nisi laboriosam, totam, id quisquam natus ab.</p>
+    </div>
+</section>
