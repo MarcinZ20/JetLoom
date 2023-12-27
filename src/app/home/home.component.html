@@ -1,1 +1,136 @@
-<p>home works!</p>
+<section class="hero block">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-size-1 has-text-weight-bold has-text-black-ter">
+            JETLOOM
+            </h1>
+            <p class="subtitle">
+            Traveling made easy
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- FILTERS -->
+
+<section class="container block">
+    <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <a class="subtitle is-6 has-text-success">
+                <fa-icon [icon]="faHome"></fa-icon>
+                Search all
+            </a>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <a class="subtitle is-6">
+                <fa-icon [icon]="faPlaneDeparture"></fa-icon>
+                Destinations
+            </a>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <a class="subtitle is-6">
+                <fa-icon [icon]="faMapPin"></fa-icon>
+                Countries
+            </a>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div class="is-hoverable">
+            <a class="subtitle is-6">
+                <fa-icon [icon]="faMoneyBill"></fa-icon>
+                Price
+            </a>
+          </div>
+        </div>
+      </nav>
+</section>
+
+<!-- FORM -->
+
+<section class="container block">
+    <div class="field is-grouped">
+        <p class="control is-expanded has-icons-left">
+            <input class="input is-rounded" type="text" placeholder="Find your dream trip ...">
+            <span class="icon is-small is-left">
+                <fa-icon [icon]="faEarthAmericas"></fa-icon>
+              </span>
+        </p>
+        <p class="control">
+          <a class="button is-primary is-rounded">
+            Search
+          </a>
+        </p>
+      </div>
+</section>
+
+<!-- CARDS -->
+
+<div class="container block box mb-6">
+    <div class="block has-text-centered">
+        <!-- <p class="title is-3 has-text-grey-dark">LAST MINUTE DEALS</p> -->
+    </div>
+    <div class="columns">
+        <div class="column">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                    <img src="../../assets/images/beach.jpg" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <p class="title">2099zł</p>
+                    <p class="subtitle is-6 has-text-grey">Hawaii</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-footer-item">
+                        <fa-icon class="mr-2" [icon]="faShoppingCart"></fa-icon>
+                        Book now
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                    <img src="../../assets/images/island.jpg" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <p class="title">2099zł</p>
+                    <p class="subtitle is-6 has-text-grey">Rodos</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-footer-item">
+                        <fa-icon class="mr-2" [icon]="faShoppingCart"></fa-icon>
+                        Book now
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                    <img src="../../assets/images/china.jpg" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <p class="title">2099zł</p>
+                    <p class="subtitle is-6 has-text-grey">Bejgin</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-footer-item">
+                        <fa-icon class="mr-2" [icon]="faShoppingCart"></fa-icon>
+                        Book now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
