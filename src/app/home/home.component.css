@@ -1,0 +1,12 @@
+.hero .hero-body .container h1 {
+    font-size: 4rem !important;
+    font-weight: 700 !important
+}
+
+section.container {
+    width: 50%;
+}
+
+nav.level .level-item a.subtitle:hover {
+    color: rgba(107, 107, 107, 0.737);
+}
