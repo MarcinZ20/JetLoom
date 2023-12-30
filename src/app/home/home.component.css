@@ -10,3 +10,13 @@ section.container {
 nav.level .level-item a.subtitle:hover {
     color: hsl(229, 53%,  53%)
 }
+
+.level-item div {
+    border-bottom: solid 2px transparent;
+
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+.level-item div:hover {
+    border-bottom: solid 2px hsl(229, 53%,  53%);
+}

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { BtnToTopComponent } from './btn-to-top/btn-to-top.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule, 
     RouterOutlet, 
     NavbarComponent, 
-    FooterComponent],
+    FooterComponent, 
+    BtnToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
