@@ -1,16 +1,19 @@
 <div class="container">
-
   <!-- UPPER FILTERS START -->
 
-  <div class="container block box has-background-primary-light">
-    <p class="title is-3">Found {{tripsData.trips.length}} results</p>
-    <hr>
+  <div class="container block box has-background-white">
+    <p class="title is-3">Found {{ tripsData.trips.length }} results</p>
+    <hr />
     <div class="columns">
       <div class="column is-two-fifths">
         <div class="field">
           <label class="label">Destination</label>
           <div class="control has-icons-left">
-            <input class="input" type="text" placeholder="Destination goes here">
+            <input
+              class="input"
+              type="text"
+              placeholder="Destination goes here"
+            />
             <span class="icon is-small is-left">
               <fa-icon [icon]="faHome"></fa-icon>
             </span>
@@ -23,7 +26,7 @@
             <div class="field">
               <label class="label">Start Date</label>
               <div class="control">
-                <input class="input" type="date" placeholder="Text input">
+                <input class="input" type="date" placeholder="Text input" />
               </div>
             </div>
           </div>
@@ -31,17 +34,17 @@
             <div class="field">
               <label class="label">End Date</label>
               <div class="control">
-                <input class="input" type="date" placeholder="Text input">
+                <input class="input" type="date" placeholder="Text input" />
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="column">
-          <div class="control">
-            <label class="label has-text-white"> a </label>
-            <button class="button is-primary is-fullwidth">Search</button>
-          </div>
+        <div class="control">
+          <label class="label has-text-white"> a </label>
+          <button class="button is-primary is-fullwidth">Search</button>
+        </div>
       </div>
     </div>
     <div class="control has-icons-left">
@@ -66,57 +69,57 @@
   <!-- LEFT FILTERS START -->
   <div class="columns">
     <div class="column is-0-mobile block is-one-fifth">
-      <div class="container box has-background-primary-light">
+      <div class="container box has-background-white">
         <p class="title is-4">Filters:</p>
-        <hr>
+        <hr />
         <div class="field">
           <label class="label">Tags</label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Vacation
           </label>
           <label class="checkbox m-1 m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Fun
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Adventure
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Relax
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Beach
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             City
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Mountains
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Summer
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Winter
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
+            <input type="checkbox" />
             Spring
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox">
-            Fall  
+            <input type="checkbox" />
+            Fall
           </label>
         </div>
-        <hr>
+        <hr />
         <div class="field">
           <label class="label">Rating</label>
           <div class="control">
@@ -131,11 +134,11 @@
             </div>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="field">
           <label class="label">Price from:</label>
           <div class="control has-icons-left">
-            <input class="input" type="number" placeholder="Price">
+            <input class="input" type="number" placeholder="Price" />
             <span class="icon is-small is-left">
               <fa-icon [icon]="faMoneyBillWave"></fa-icon>
             </span>
@@ -144,13 +147,13 @@
         <div class="field">
           <label class="label">Price to:</label>
           <div class="control has-icons-left">
-            <input class="input" type="number" placeholder="Price">
+            <input class="input" type="number" placeholder="Price" />
             <span class="icon is-small is-left">
               <fa-icon [icon]="faMoneyBillWave"></fa-icon>
             </span>
           </div>
         </div>
-        <hr>
+        <hr />
         <p class="buttons">
           <button class="button is-primary">Filter</button>
           <button class="button is-danger is-light">Cancel</button>
@@ -162,12 +165,20 @@
 
     <!-- TRIPS START -->
     <div class="column">
-      <div *ngFor="let trip of tripsData.trips" class="container block box">
+      <div
+        *ngFor="let trip of tripsData.trips | sortTripsByPrice"
+        class="container block box"
+        id="trip"
+      >
         <div class="container">
           <div class="columns">
             <div class="column is-one-quarter">
               <figure class="image is-square">
-                <img class="is-rounded" src="../../assets/images/island.jpg" alt="Placeholder image">
+                <img
+                  class="is-rounded"
+                  src="../../assets/images/island.jpg"
+                  alt="Placeholder image"
+                />
               </figure>
             </div>
             <div class="column is-three-fifths">
@@ -177,33 +188,41 @@
                 <p>{{ trip.Description }}</p>
                 <span class="has-text-weight-bold">Date: </span>
                 <span>
-                  <time>{{trip.StartDate}}</time> 
-                  <fa-icon class="ml-2 mr-2" [icon]="faArrowRight"></fa-icon> 
-                  <time>{{trip.EndDate}}</time>
+                  <time>{{ trip.StartDate }}</time>
+                  <fa-icon class="ml-2 mr-2" [icon]="faArrowRight"></fa-icon>
+                  <time>{{ trip.EndDate }}</time>
                 </span>
-                <br>
+                <br />
                 <span class="has-text-weight-bold">Tags: </span>
-                <span class="tag is-light mr-1">#{{ trip.Destination }}</span> 
+                <span class="tag is-light mr-1">#{{ trip.Destination }}</span>
                 <span class="tag is-light mr-1">#Fun</span>
                 <span class="tag is-light mr-1">#Vacation</span>
-                <hr>
+                <hr />
                 <div class="columns">
                   <div class="column is-half">
-                    <p class="title is-3">Price:
-                      <span class="has-text-primary">
-                        {{ trip.Price }}$
-                      </span>
+                    <p class="title is-3">
+                      Price:
+                      <span class="has-text-primary"> {{ trip.Price }}$ </span>
                     </p>
                   </div>
                   <div class="column">
                     <p class="buttons">
-                      <button class="button is-primary" (click)="addToCart(trip)">
+                      <button
+                        class="button is-primary"
+                        id="buy-button"
+                        (click)="addToCart(trip)"
+                      >
                         <span class="icon">
                           <fa-icon [icon]="faPlus"></fa-icon>
                         </span>
                         <span>Buy</span>
                       </button>
-                      <button class="button is-danger is-light" (click)="removeFromCart(trip)">
+                      <button
+                        class="button is-danger is-light"
+                        id="remove-button"
+                        (click)="removeFromCart(trip)"
+                        disabled
+                      >
                         <span class="icon">
                           <fa-icon [icon]="faMinus"></fa-icon>
                         </span>
@@ -224,13 +243,13 @@
                 </div>
               </div>
               <p class="subtitle is-5 mb-1 mt-5">Rating:</p>
-                <div class="rating">
-                  <fa-icon [icon]="faStar"></fa-icon>
-                  <fa-icon [icon]="faStar"></fa-icon>
-                  <fa-icon [icon]="faStar"></fa-icon>
-                  <fa-icon [icon]="faStar"></fa-icon>
-                  <fa-icon [icon]="faStarHalfStroke"></fa-icon>
-                </div>
+              <div class="rating">
+                <fa-icon [icon]="faStar"></fa-icon>
+                <fa-icon [icon]="faStar"></fa-icon>
+                <fa-icon [icon]="faStar"></fa-icon>
+                <fa-icon [icon]="faStar"></fa-icon>
+                <fa-icon [icon]="faStarHalfStroke"></fa-icon>
+              </div>
               <button class="button is-info mt-3">Details</button>
             </div>
           </div>
