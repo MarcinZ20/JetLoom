@@ -1,1 +1,135 @@
-<p>add-trip works!</p>
+<div class="container">
+    <div class="columns m-5 p-3">
+        <div class="column has-background-white pb-0">
+            <div class="field-body box">
+                <div class="field">
+                    <label class="label">Trip Name</label>
+                    <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Fantastic trip to ..."
+                    [formControl]="TripName">
+                    <span class="icon is-small is-left">
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </span>
+                    <span class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label">Destination</label>
+                    <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Maledives"
+                    [formControl]="TripDestination">
+                    <span class="icon is-small is-left">
+                        <fa-icon [icon]="faLocationDot"></fa-icon>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="field box">
+                <label class="label">Trip Description</label>
+                <div class="control">
+                <textarea class="textarea" placeholder="Write description here ..."
+                [formControl]="TripDescription"></textarea>
+                </div>
+            </div>
+
+            <div class="field-body box">
+                <div class="field">
+                    <label class="label">Start date: </label>
+                    <div class="control">
+                        <input class="input" type="date" name="startDate" id="sd"
+                        [formControl]="TripStartDate">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">End date: </label>
+                    <div class="control">
+                        <input class="input" type="date" name="endDate" id="ed"
+                        [formControl]="TripEndDate">
+                    </div>
+                </div>
+            </div>
+        
+            <div class="field-body box">
+                <div class="field">
+                    <label class="label">Price </label>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <span class="select">
+                                <select>
+                                    <option>£</option>
+                                    <option>€</option>
+                                    <option>$</option>
+                                    <option>zł</option>
+                                </select>
+                            </span>
+                        </p>
+                        <p class="control">
+                            <input class="input " type="number" placeholder="2000"
+                            [formControl]="TripPrice">
+                        </p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Capacity </label>
+                    <div class="control">
+                        <input class="input" type="number"
+                        placeholder="35"
+                        [formControl]="TripCapacity">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field box">
+                <label class="label">Link to photo</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="text"
+                    [formControl]="TripImage">
+                    <span class="icon is-small is-left">
+                        <fa-icon [icon]="faLink"></fa-icon>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field box">
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Tags</label>
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        #
+                                    </a>
+                                </p>
+                                <p class="control ">
+                                    <input type="text" class="input"
+                                    [formControl]="TripTags">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column has-background-black">
+                        <span class="tag">{{ TripTags.value }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field is-grouped box">
+                <div class="control">
+                <button class="button is-link">Submit</button>
+                </div>
+                <div class="control">
+                <button class="button is-link is-light">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="column box" id="main-container">
+            <p class="title is-1 has-text-grey-dark">Your dream vacation starts here ...</p>
+        </div>
+    </div>
+</div>
+

@@ -21,6 +21,7 @@ export class TripComponent implements Trip {
   Capacity: number;
   Description: string;
   Image: string;
+  Tags: string[];
 
   // Icons
   faCalendar = faCalendar;
@@ -35,9 +36,10 @@ export class TripComponent implements Trip {
     endDate: string,
     price: number,
     maxCapacity: number,
-    Capacity: number,
+    capacity: number,
     description: string,
-    image: string
+    image: string,
+    tags: string[]
   ) {
     this.TripName = tripName;
     this.Destination = destination;
@@ -45,9 +47,10 @@ export class TripComponent implements Trip {
     this.EndDate = endDate;
     this.Price = price;
     this.MaxCapacity = maxCapacity;
-    this.Capacity = Capacity;
+    this.Capacity = capacity;
     this.Description = description;
     this.Image = image;
+    this.Tags = tags;
   }
 
   // Getters

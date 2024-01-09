@@ -8,6 +8,7 @@ export interface Trip {
     Capacity: number;
     Description: string;
     Image: string;
+    Tags: string[];
 
-    initialize(name: string, destination: string, startDate: string, endDate: string, price: number, maxCapacity: number, Capacity: number, description: string, image: string): void;
+    initialize(name: string, destination: string, startDate: string, endDate: string, price: number, maxCapacity: number, capacity: number, description: string, image: string, tags: string[]): void;
 }

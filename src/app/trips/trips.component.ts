@@ -4,7 +4,9 @@ import { Trips } from '../trips';
 import { TripComponent } from '../trip/trip.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SortTripsByPricePipe } from '../pipes/sort-trips-by-price.pipe';
+import { FormsModule } from '@angular/forms';
+import { SortTripsPipe } from '../pipes/sort-trips.pipe';
+
 import {
   faHeart,
   faMinus,
@@ -28,7 +30,8 @@ import { Trip } from '../trip';
     HttpClientModule,
     FontAwesomeModule,
     TripComponent,
-    SortTripsByPricePipe,
+    FormsModule,
+    SortTripsPipe
   ],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
@@ -36,6 +39,7 @@ import { Trip } from '../trip';
 export class TripsComponent {
   // Data
   tripsData: Trips;
+  selectedOption: string = 'lowestPrice';
 
   // Icons
   faPlus = faPlus;
@@ -66,59 +70,27 @@ export class TripsComponent {
   }
 
   addToCart(trip: Trip) {
-    // 1. Kiedy 5 < capacity < maxCapacity
-    if (trip.Capacity > 5 && trip.Capacity <= trip.MaxCapacity) {
-      document.getElementById('remove-button')?.removeAttribute('disabled');
-    }
-
-    // 2. Kiedy capacity <= 5
-    if (trip.Capacity === 6) {
-      document.getElementById('trip')?.classList.add('has-background-warning');
-    }
-
-    // 3. Kiedy capacity === 1
-    if (trip.Capacity === 1) {
-      document.getElementById('buy-button')?.setAttribute('disabled', 'true');
-      // TODO: some kind of overlay
-      document.getElementById('trip')?.classList.add('has-background-grey-dark');
-    }
-
-    // 4. Kiedy capacity === 0
-    if (trip.Capacity === 0) {
-      return;
-    }
-
     trip.Capacity--;
-    console.log('Capacity: ' + trip.Capacity);
   }
 
   removeFromCart(trip: Trip) {
-    // 1. If capacity === maxCapacity
-    if (trip.Capacity === trip.MaxCapacity) {
-      return;
-    }
-
-    // 2. If capacity = maxCapacity - 1
-    if (trip.Capacity === trip.MaxCapacity - 1) {
-      document.getElementById('remove-button')?.setAttribute('disabled', 'true');
-    }
-
-    // 3. If capacity = 5
-    if (trip.Capacity === 5) {
-      document.getElementById('trip')?.classList.remove('has-background-warning');
-    }
-
-    if (trip.Capacity === 0) {
-      document.getElementById('buy-button')?.attributes.removeNamedItem('disabled');
-      document.getElementById('trip')?.classList.remove('has-background-grey-dark');
-    }
-
     trip.Capacity++;
-    console.log('Capacity: ' + trip.Capacity);
   }
 
   addToFavorites(trip: Trip) {
     console.log('Added to favorites: ' + trip.TripName);
+  }
+
+  getHighestPriceTrip() {
+    return this.tripsData.trips.reduce((highest, trip) => {
+      return trip.Price > highest.Price ? trip : highest;
+    }, this.tripsData.trips[0]);
+  }
+
+  getLowestPriceTrip() {
+    return this.tripsData.trips.reduce((lowest, trip) => {
+      return trip.Price < lowest.Price ? trip : lowest;
+    }, this.tripsData.trips[0]);
   }
 
   // TODO: Implement
