@@ -18,10 +18,9 @@ export class SortTripsPipe implements PipeTransform {
       case 'za':
         return trips.sort((a, b) => b.TripName.localeCompare(a.TripName));
       case 'shortestDuration':
-        return trips;
+        return trips.sort((a, b) => (Number(a.EndDate) - Number(a.StartDate)) - (Number(b.EndDate) - Number(b.StartDate)));
       case 'longestDuration':
-        return trips;
-      // Add more cases for other options
+        return trips.sort((a, b) => (Number(b.EndDate) - Number(b.StartDate)) - (Number(a.EndDate) - Number(a.StartDate)));
       default:
         return trips;
     }

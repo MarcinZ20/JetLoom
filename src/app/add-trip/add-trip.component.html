@@ -5,8 +5,14 @@
                 <div class="field">
                     <label class="label">Trip Name</label>
                     <div class="control has-icons-left has-icons-right">
-                    <input class="input" type="text" placeholder="Fantastic trip to ..."
-                    formControlName="TripName">
+                    <input 
+                    class="input" 
+                    type="text" placeholder="Fantastic trip to ..."
+                    required
+                    minlength="5"
+                    maxlength="30"
+                    formControlName="TripName"
+                    >
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faPen"></fa-icon>
                     </span>
@@ -14,42 +20,79 @@
                         <i class="fas fa-check"></i>
                     </span>
                     </div>
+                    <p
+                    *ngIf="TripForm.controls['TripName'].errors?.['minlength'] || TripForm.controls['TripName'].errors?.['maxlength'] || TripForm.controls['TripName'].errors?.['required']"
+                    class="help is-danger">Name between 5 and 30 letters.
+                    </p>
                 </div>
                 
                 <div class="field">
                     <label class="label">Destination</label>
                     <div class="control has-icons-left has-icons-right">
-                    <input class="input" type="text" placeholder="Maledives"
+                    <input 
+                    class="input" 
+                    type="text" placeholder="Maledives"
+                    required
+                    minlength="3"
+                    maxlength="30"
                     formControlName="TripDestination">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faLocationDot"></fa-icon>
                     </span>
                     </div>
+                    <p
+                    *ngIf="TripForm.controls['TripDestination'].errors?.['minlength'] || TripForm.controls['TripDestination'].errors?.['maxlength'] || TripForm.controls['TripDestination'].errors?.['required']"
+                    class="help is-danger">Destination must be filled.
+                    </p>
                 </div>
             </div>
         
             <div class="field box">
-                <label class="label">Trip Description</label>
+                <label class="label">Description</label>
                 <div class="control">
-                <textarea class="textarea" placeholder="Write description here ..."
+                <textarea 
+                class="textarea" 
+                placeholder="Write description here ..."
                 formControlName="TripDescription"></textarea>
                 </div>
+                <p
+                *ngIf="TripForm.controls['TripDescription'].value === ''"
+                class="help is-info">Trips with description are more popular.
+                </p>
             </div>
 
             <div class="field-body box">
                 <div class="field">
                     <label class="label">Start date: </label>
                     <div class="control">
-                        <input class="input" type="date" name="startDate" id="sd"
+                        <input 
+                        class="input" 
+                        type="date" name="startDate" id="sd"
+                        required
                         formControlName="TripStartDate">
                     </div>
+                    <p
+                    *ngIf="TripForm.controls['TripStartDate'].errors?.['required']"
+                    class="help is-danger">
+                    Start date must be filled.
+                    </p>
                 </div>
                 <div class="field">
                     <label class="label">End date: </label>
                     <div class="control">
-                        <input class="input" type="date" name="endDate" id="ed"
+                        <input 
+                        class="input" 
+                        type="date" 
+                        name="endDate" 
+                        id="ed"
+                        required
                         formControlName="TripEndDate">
                     </div>
+                    <p
+                    *ngIf="TripForm.controls['TripEndDate'].errors?.['required']"
+                    class="help is-danger">
+                    End date must be filled.
+                    </p>
                 </div>
             </div>
         
@@ -57,6 +100,13 @@
                 <div class="field">
                     <label class="label">Price </label>
                     <div class="field has-addons">
+                        <p class="control">
+                            <input 
+                            class="input " type="number" placeholder="2000"
+                            required
+                            max="100000"
+                            formControlName="TripPrice">
+                        </p>
                         <p class="control">
                             <span class="select">
                                 <select formControlName="TripPriceCurrency">
@@ -67,56 +117,112 @@
                                 </select>
                             </span>
                         </p>
-                        <p class="control">
-                            <input class="input " type="number" placeholder="2000"
-                            formControlName="TripPrice">
-                        </p>
                     </div>
+                    <p
+                    *ngIf="TripForm.controls['TripPrice'].errors?.['required']"
+                    class="help is-danger">
+                    Price must be filled.
+                    </p>
+                    <p
+                    *ngIf="TripForm.controls['TripPrice'].errors?.['max']"
+                    class="help is-danger">
+                    Maximum price excided.
+                    </p>
                 </div>
                 <div class="field">
                     <label class="label">Capacity </label>
-                    <div class="control">
-                        <input class="input" type="number"
-                        placeholder="35"
+                    <p class="control is-expanded">
+                        <input 
+                        class="input" type="number"
+                        placeholder="1"
+                        required
+                        min="1"
+                        max="100"
                         formControlName="TripCapacity">
-                    </div>
+                    </p>
+                    <p
+                    *ngIf="TripForm.controls['TripCapacity'].errors?.['required']"
+                    class="help is-danger">
+                    Capacity must be filled.
+                    </p>
+                    <p
+                    *ngIf="TripForm.controls['TripCapacity'].errors?.['min']"
+                    class="help is-danger">
+                    Minimum capacity is 1.
+                    </p>
+                    <p
+                    *ngIf="TripForm.controls['TripCapacity'].errors?.['max']"
+                    class="help is-danger">
+                    Maximum capacity is 100.
+                    </p>
                 </div>
             </div>
             
             <div class="field box">
                 <label class="label">Link to photo</label>
                 <div class="control has-icons-left">
-                    <input class="input" type="text"
+                    <input 
+                    class="input" 
+                    type="text"
+                    placeholder="https://www.example.com/image.jpg"
                     formControlName="TripImage">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faLink"></fa-icon>
                     </span>
                 </div>
+                <p
+                *ngIf="TripForm.controls['TripImage'].value === ''"
+                class="help is-info">Trips with photo attached, are more popular.
+                </p>
+                <div *ngIf="TripForm.controls['TripImage'].invalid"></div>
+                <p
+                *ngIf="TripForm.controls['TripImage'].invalid &&
+                (TripForm.controls['TripImage'].errors?.['linkValidator'] || TripForm.controls['TripImage'].touched)"
+                class="help is-danger">Link must be valid.
+                </p>
             </div>
 
             <div class="field box">
-                <div class="columns">
-                    <div class="column">
-                        <div class="field">
-                            <label class="label">Tags</label>
-                            <div class="field has-addons">
-                                <p class="control">
-                                    <a class="button is-static">
-                                        #
-                                    </a>
-                                </p>
-                                <p class="control ">
-                                    <input type="text" class="input"
-                                    formControlName="TripTags">
-                                </p>
-                            </div>
-                        </div>
+                <div class="field">
+                    <label class="label">Tags</label>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a class="button is-static">
+                                #
+                            </a>
+                        </p>
+                        <p class="control is-expanded">
+                            <input 
+                            type="text" 
+                            class="input"
+                            placeholder="e.g. beach, sun, fun"
+                            formControlName="TripTags"
+                            id="tag-input">
+                        </p>
+                        <p class="control">
+                            <button 
+                            class="button is-info"
+                            (click)="addTag()"
+                            id="tag-button">
+                                Add
+                            </button>
+                        </p>
                     </div>
-                    <div class="column">
-                        <span class="tag">#{{ TripForm.controls.TripTags.value }}
-                        </span>
-                    </div>
+                    <p class="help is-info">Add tags to help people find your trip.
+                    </p>
                 </div>
+            <div class="container">
+                <span 
+                *ngFor="let tag of tags" 
+                class="tag is-info is-light m-1 is-medium">
+                    {{tag}}
+                    <button 
+                    class="delete is-small" 
+                    (click)="removeTag(tag)">
+                    </button>
+                </span>
+                <span class="tag is-white is-medium"></span>
+            </div>
             </div>
             
             <div class="field is-grouped box">

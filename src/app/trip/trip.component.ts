@@ -14,8 +14,8 @@ export class TripComponent implements Trip {
   // Properties
   TripName: string;
   Destination: string;
-  StartDate: string;
-  EndDate: string;
+  StartDate: Date;
+  EndDate: Date;
   Price: number;
   MaxCapacity: number;
   Capacity: number;
@@ -28,35 +28,6 @@ export class TripComponent implements Trip {
   faCalendarAlt = faCalendarAlt;
 
   constructor() {}
-
-  // Getters
-  getTripName() {
-    return this.TripName;
-  }
-
-  getDestination() {
-    return this.Destination;
-  }
-
-  getStartDate() {
-    return this.StartDate;
-  }
-
-  getEndDate() {
-    return this.EndDate;
-  }
-
-  getPrice() {
-    return this.Price;
-  }
-
-  getMaxCapacity() {
-    return this.MaxCapacity;
-  }
-
-  getDescription() {
-    return this.Description;
-  }
 
   // Observables
   menu = document.querySelector('section.container .tabs ul li:nth-child(2)');

@@ -2,7 +2,7 @@
   <!-- UPPER FILTERS START -->
 
   <div class="container block box has-background-white">
-    <p class="title is-3">Found {{ tripsData.trips.length }} results</p>
+    <p class="title is-3">Found {{ trips.length }} results</p>
     <hr />
     <div class="columns">
       <div class="column is-two-fifths">
@@ -56,6 +56,9 @@
           <option value="za">From Z to A</option>
           <option value="lowestRating">Rating: from lowest</option>
           <option value="highestRating">Rating: from highest</option>
+          <option value="longestDuration">Duration: from longest</option>
+          <option value="shortestDuration">Duration: from shortest
+          </option>
         </select>
       </div>
       <div class="icon is-small is-left">
@@ -166,7 +169,7 @@
     <!-- TRIPS START -->
     <div class="column">
       <div
-        *ngFor="let trip of tripsData.trips | sortTrips: selectedOption"
+        *ngFor="let trip of trips | sortTrips: selectedOption"
         class="container block box"
         [class.has-background-warning-light]="trip.Capacity <= 5"
         [class.has-background-grey-dark]="trip.Capacity === 0"
@@ -192,16 +195,15 @@
                 <p>{{ trip.Description }}</p>
                 <span class="has-text-weight-bold">Date: </span>
                 <span>
-                  <time>{{ trip.StartDate }}</time>
+                  <time>{{ trip.StartDate | date:'mediumDate' }}</time>
                   <fa-icon class="ml-2 mr-2" [icon]="faArrowRight"></fa-icon>
-                  <time>{{ trip.EndDate }}</time>
+                  <time>{{ trip.EndDate | date:'mediumDate' }}</time>
                 </span>
                 <br />
                 <span class="has-text-weight-bold">Tags: </span>
                 <span *ngFor="let tag of trip.Tags" class="container">
                   <span class="tag is-light mr-1">{{ tag }}</span>
                 </span>
-                <span class="tag">{{ trip.Capacity }}</span>
                 <hr />
                 <div class="columns">
                   <div class="column is-half">

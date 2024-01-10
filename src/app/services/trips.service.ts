@@ -12,26 +12,34 @@ export class TripsService {
   private apiUrl = '../../assets/data/trips.json';
   
   constructor(private http: HttpClient) {
-    this.data = {
-      trips: []
-    };
-   }
+    this.data = { trips: [] };
+  }
 
-  //  FIXME: This is not working
   addTrip(trip: Trip) {
-    console.log("Inside Service: " + typeof trip);
     this.data.trips.push(trip);
-    console.log("Inside Service check: " + this.data.trips[-2].Capacity);
+  }
+
+  removeTrip(trip: Trip) {
+    this.data.trips = this.data.trips.filter(t => t !== trip);
+  }
+
+  getTrips(): Trip[] {
+    return this.data.trips;
   }
 
   fetchTrips(path: string = this.apiUrl): Promise<Trips> {
+    console.log("TripsService: fetchTrips()");
     return new Promise<Trips>((resolve, reject) => {
       this.http.get<Trips>(path)
         .subscribe((data: Trips) => {
           this.data = data;
           resolve(data);
+          this.data.trips.forEach(trip => {
+            console.log(trip);
+            trip.Capacity = trip.MaxCapacity;
+          });
+          console.log("\nEND- - - - - - -\n");
           reject("Error: " + data);
-          console.log("Inside Service: " + data);
         });
     });
   }

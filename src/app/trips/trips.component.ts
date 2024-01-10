@@ -3,11 +3,13 @@ import { NgFor } from '@angular/common';
 import { Trips } from '../trips';
 import { Trip } from '../trip';
 import { TripComponent } from '../trip/trip.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { SortTripsPipe } from '../pipes/sort-trips.pipe';
 import { TripsService } from '../services/trips.service';
+import { AddTripComponent } from '../add-trip/add-trip.component';
+import { DatePipe } from '@angular/common';
 
 import {
   faHeart,
@@ -32,15 +34,17 @@ import {
     TripComponent,
     FormsModule,
     SortTripsPipe,
+    DatePipe,
+    AddTripComponent,
   ],
   providers: [TripsService],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
 })
 export class TripsComponent implements OnInit{
-  // Data
-  tripsData: Trips;
-  selectedOption: string = 'lowestPrice';
+
+  public trips: Trip[];
+  public selectedOption: string = 'lowestPrice';
 
   // Icons
   faPlus = faPlus;
@@ -54,26 +58,24 @@ export class TripsComponent implements OnInit{
   faMoneyBillWave = faMoneyBillWave;
   faArrowUpWideShort = faArrowUpWideShort;
 
-  constructor(private http: HttpClient,
-              private service: TripsService
-    ) {
-      this.tripsData = { trips: [] };
-    }
+  constructor(private service: TripsService) {
+    this.trips = [];
+  }
     
-    async ngOnInit() {
-      this.service.fetchTrips().then((data: Trips) => {
-        this.tripsData = data;
+  ngOnInit() {
+    console.log("ngOnInit - TripsComponent");
+    this.service.fetchTrips().then((data: Trips) => {
+      this.trips = data.trips;
+      this.trips.forEach((trip) => {
+        trip.StartDate = new Date(trip.StartDate);
+        trip.EndDate = new Date(trip.EndDate);
       });
-    }
-
-  fetchTrips(path: string = '../../assets/data/trips.json') {
-    this.http.get<Trips>(path).subscribe((data: Trips) => {
-      this.tripsData = data;
     });
+    this.trips = this.service.getTrips();
   }
 
   getTripsCount() {
-    return this.tripsData.trips.length;
+    return this.trips.length;
   }
 
   addToCart(trip: Trip) {
@@ -89,15 +91,15 @@ export class TripsComponent implements OnInit{
   }
 
   getHighestPriceTrip() {
-    return this.tripsData.trips.reduce((highest, trip) => {
+    return this.trips.reduce((highest, trip) => {
       return trip.Price > highest.Price ? trip : highest;
-    }, this.tripsData.trips[0]);
+    }, this.trips[0]);
   }
 
   getLowestPriceTrip() {
-    return this.tripsData.trips.reduce((lowest, trip) => {
+    return this.trips.reduce((lowest, trip) => {
       return trip.Price < lowest.Price ? trip : lowest;
-    }, this.tripsData.trips[0]);
+    }, this.trips[0]);
   }
 
   // TODO: Implement
