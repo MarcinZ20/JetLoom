@@ -29,30 +29,6 @@ export class TripComponent implements Trip {
 
   constructor() {}
 
-  initialize(
-    tripName: string,
-    destination: string,
-    startDate: string,
-    endDate: string,
-    price: number,
-    maxCapacity: number,
-    capacity: number,
-    description: string,
-    image: string,
-    tags: string[]
-  ) {
-    this.TripName = tripName;
-    this.Destination = destination;
-    this.StartDate = startDate;
-    this.EndDate = endDate;
-    this.Price = price;
-    this.MaxCapacity = maxCapacity;
-    this.Capacity = capacity;
-    this.Description = description;
-    this.Image = image;
-    this.Tags = tags;
-  }
-
   // Getters
   getTripName() {
     return this.TripName;

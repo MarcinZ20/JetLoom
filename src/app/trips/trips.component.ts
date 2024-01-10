@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Trips } from '../trips';
+import { Trip } from '../trip';
 import { TripComponent } from '../trip/trip.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { SortTripsPipe } from '../pipes/sort-trips.pipe';
+import { TripsService } from '../services/trips.service';
 
 import {
   faHeart,
@@ -19,8 +21,6 @@ import {
   faMoneyBillWave,
   faArrowUpWideShort,
 } from '@fortawesome/free-solid-svg-icons';
-import { getDataService } from '../../services/getDataService';
-import { Trip } from '../trip';
 
 @Component({
   selector: 'app-trips',
@@ -31,12 +31,13 @@ import { Trip } from '../trip';
     FontAwesomeModule,
     TripComponent,
     FormsModule,
-    SortTripsPipe
+    SortTripsPipe,
   ],
+  providers: [TripsService],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
 })
-export class TripsComponent {
+export class TripsComponent implements OnInit{
   // Data
   tripsData: Trips;
   selectedOption: string = 'lowestPrice';
@@ -53,11 +54,17 @@ export class TripsComponent {
   faMoneyBillWave = faMoneyBillWave;
   faArrowUpWideShort = faArrowUpWideShort;
 
-  constructor(private http: HttpClient) {
-    this.tripsData = new Trips();
-    // this.tripsData = service.fetchTrips();
-    this.fetchTrips();
-  }
+  constructor(private http: HttpClient,
+              private service: TripsService
+    ) {
+      this.tripsData = { trips: [] };
+    }
+    
+    async ngOnInit() {
+      this.service.fetchTrips().then((data: Trips) => {
+        this.tripsData = data;
+      });
+    }
 
   fetchTrips(path: string = '../../assets/data/trips.json') {
     this.http.get<Trips>(path).subscribe((data: Trips) => {
@@ -94,7 +101,7 @@ export class TripsComponent {
   }
 
   // TODO: Implement
-  // All kinds of sorting
+  // All kinds of filtering
   // Filter by price
   // Filter by duration
   // Filter by location
@@ -104,7 +111,5 @@ export class TripsComponent {
   // Filter by name
 
   // TODO: Implement
-  // Buttons for sorting
-  // Buttons for filtering
-  // Buttons for pagination
+  // Sort by duration
 }

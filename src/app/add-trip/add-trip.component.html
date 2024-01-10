@@ -1,4 +1,4 @@
-<div class="container">
+<form [formGroup]="TripForm" (ngSubmit)="onSubmit()" class="container">
     <div class="columns m-5 p-3">
         <div class="column has-background-white pb-0 pt-0">
             <div class="field-body box">
@@ -6,7 +6,7 @@
                     <label class="label">Trip Name</label>
                     <div class="control has-icons-left has-icons-right">
                     <input class="input" type="text" placeholder="Fantastic trip to ..."
-                    [formControl]="TripName">
+                    formControlName="TripName">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faPen"></fa-icon>
                     </span>
@@ -20,7 +20,7 @@
                     <label class="label">Destination</label>
                     <div class="control has-icons-left has-icons-right">
                     <input class="input" type="text" placeholder="Maledives"
-                    [formControl]="TripDestination">
+                    formControlName="TripDestination">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faLocationDot"></fa-icon>
                     </span>
@@ -32,7 +32,7 @@
                 <label class="label">Trip Description</label>
                 <div class="control">
                 <textarea class="textarea" placeholder="Write description here ..."
-                [formControl]="TripDescription"></textarea>
+                formControlName="TripDescription"></textarea>
                 </div>
             </div>
 
@@ -41,14 +41,14 @@
                     <label class="label">Start date: </label>
                     <div class="control">
                         <input class="input" type="date" name="startDate" id="sd"
-                        [formControl]="TripStartDate">
+                        formControlName="TripStartDate">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">End date: </label>
                     <div class="control">
                         <input class="input" type="date" name="endDate" id="ed"
-                        [formControl]="TripEndDate">
+                        formControlName="TripEndDate">
                     </div>
                 </div>
             </div>
@@ -59,8 +59,8 @@
                     <div class="field has-addons">
                         <p class="control">
                             <span class="select">
-                                <select>
-                                    <option>£</option>
+                                <select formControlName="TripPriceCurrency">
+                                    <option selected=>£</option>
                                     <option>€</option>
                                     <option>$</option>
                                     <option>zł</option>
@@ -69,7 +69,7 @@
                         </p>
                         <p class="control">
                             <input class="input " type="number" placeholder="2000"
-                            [formControl]="TripPrice">
+                            formControlName="TripPrice">
                         </p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     <div class="control">
                         <input class="input" type="number"
                         placeholder="35"
-                        [formControl]="TripCapacity">
+                        formControlName="TripCapacity">
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <label class="label">Link to photo</label>
                 <div class="control has-icons-left">
                     <input class="input" type="text"
-                    [formControl]="TripImage">
+                    formControlName="TripImage">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faLink"></fa-icon>
                     </span>
@@ -107,20 +107,21 @@
                                 </p>
                                 <p class="control ">
                                     <input type="text" class="input"
-                                    [formControl]="TripTags">
+                                    formControlName="TripTags">
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="column">
-                        <span class="tag">#{{ TripTags.value }}</span>
+                        <span class="tag">#{{ TripForm.controls.TripTags.value }}
+                        </span>
                     </div>
                 </div>
             </div>
             
             <div class="field is-grouped box">
                 <div class="control">
-                <button class="button is-link">Submit</button>
+                <button class="button is-link"                  type="submit">Submit</button>
                 </div>
                 <div class="control">
                 <button class="button is-link is-light">Cancel</button>
@@ -131,5 +132,5 @@
             <p class="title is-1 has-text-grey-dark">Your dream vacation starts here ...</p>
         </div>
     </div>
-</div>
+</form>
 

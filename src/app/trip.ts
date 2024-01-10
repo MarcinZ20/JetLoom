@@ -9,6 +9,25 @@ export interface Trip {
     Description: string;
     Image: string;
     Tags: string[];
-
-    initialize(name: string, destination: string, startDate: string, endDate: string, price: number, maxCapacity: number, capacity: number, description: string, image: string, tags: string[]): void;
 }
+
+export function createTrip(tripData: Partial<Trip>): Trip {
+    const defaultTripData: Trip = {
+        TripName: '',
+        Destination: '',
+        StartDate: '',
+        EndDate: '',
+        Price: 0,
+        MaxCapacity: 0,
+        Capacity: 0,
+        Description: '',
+        Image: '',
+        Tags: [],
+    };
+
+    const trip: Trip = { ...defaultTripData, ...tripData };
+    trip.Capacity = trip.MaxCapacity;
+
+    return trip;
+}
+    
