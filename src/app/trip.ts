@@ -1,6 +1,7 @@
 export interface Trip {
     TripName: string;
-    Destination: string;
+    Country: string;
+    City: string;
     StartDate: Date;
     EndDate: Date;
     Price: number;

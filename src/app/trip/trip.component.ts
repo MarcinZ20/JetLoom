@@ -13,7 +13,8 @@ import { faCalendar, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 export class TripComponent implements Trip {
   // Properties
   TripName: string;
-  Destination: string;
+  Country: string;
+  City: string;
   StartDate: Date;
   EndDate: Date;
   Price: number;
