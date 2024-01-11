@@ -2,9 +2,14 @@
   <!-- UPPER FILTERS START -->
 
   <div class="container block box has-background-white">
+    <!--TODO: Update the value accordingly  -->
     <p class="title is-3">Found {{ trips.length }} results</p>
     <hr />
-    <div class="columns">
+    <form
+      [formGroup]="topFilterForm"
+      (ngSubmit)="filterTripsByDestinationAndDate()"
+      class="columns"
+    >
       <div class="column is-two-fifths">
         <div class="field">
           <label class="label">Destination</label>
@@ -13,6 +18,7 @@
               class="input"
               type="text"
               placeholder="Destination goes here"
+              formControlName="DestinationFilter"
             />
             <span class="icon is-small is-left">
               <fa-icon [icon]="faHome"></fa-icon>
@@ -26,7 +32,11 @@
             <div class="field">
               <label class="label">Start Date</label>
               <div class="control">
-                <input class="input" type="date" placeholder="Text input" />
+                <input
+                  class="input"
+                  type="date"
+                  formControlName="StartDateFilter"
+                />
               </div>
             </div>
           </div>
@@ -34,7 +44,11 @@
             <div class="field">
               <label class="label">End Date</label>
               <div class="control">
-                <input class="input" type="date" placeholder="Text input" />
+                <input
+                  class="input"
+                  type="date"
+                  formControlName="EndDateFilter"
+                />
               </div>
             </div>
           </div>
@@ -43,10 +57,12 @@
       <div class="column">
         <div class="control">
           <label class="label has-text-white"> a </label>
-          <button class="button is-primary is-fullwidth">Search</button>
+          <button type="submit" class="button is-primary is-fullwidth">
+            Search
+          </button>
         </div>
       </div>
-    </div>
+    </form>
     <div class="control has-icons-left">
       <div class="select is-rounded">
         <select [(ngModel)]="selectedOption">
@@ -57,8 +73,7 @@
           <option value="lowestRating">Rating: from lowest</option>
           <option value="highestRating">Rating: from highest</option>
           <option value="longestDuration">Duration: from longest</option>
-          <option value="shortestDuration">Duration: from shortest
-          </option>
+          <option value="shortestDuration">Duration: from shortest</option>
         </select>
       </div>
       <div class="icon is-small is-left">
@@ -78,47 +93,47 @@
         <div class="field">
           <label class="label">Tags</label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Vacation
           </label>
           <label class="checkbox m-1 m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Fun
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Adventure
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Relax
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Beach
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             City
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Mountains
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Summer
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Winter
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Spring
           </label>
           <label class="checkbox m-1">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="addTagToFilters($event)" />
             Fall
           </label>
         </div>
@@ -167,9 +182,16 @@
     <!-- LEFT FILTERS END -->
 
     <!-- TRIPS START -->
+    
     <div class="column">
       <div
-        *ngFor="let trip of trips | sortTrips: selectedOption"
+        *ngFor="
+          let trip of trips
+          
+            | filterTripsByTopBar : selectedTopBarFilter
+            | filterTripsByTag : selectedTags
+            | sortTrips : selectedOption
+        "
         class="container block box"
         [class.has-background-warning-light]="trip.Capacity <= 5"
         [class.has-background-grey-dark]="trip.Capacity === 0"
@@ -190,14 +212,16 @@
             </div>
             <div class="column is-three-fifths">
               <p class="title is-3">{{ trip.TripName }}</p>
-              <p class="subtitle is-5 has-text-grey">{{ trip.Destination }}</p>
+              <p class="subtitle is-5 has-text-grey">
+                {{ trip.Country }}, {{ trip.City }}
+              </p>
               <div class="content block">
                 <p>{{ trip.Description }}</p>
                 <span class="has-text-weight-bold">Date: </span>
                 <span>
-                  <time>{{ trip.StartDate | date:'mediumDate' }}</time>
+                  <time>{{ trip.StartDate | date : "mediumDate" }}</time>
                   <fa-icon class="ml-2 mr-2" [icon]="faArrowRight"></fa-icon>
-                  <time>{{ trip.EndDate | date:'mediumDate' }}</time>
+                  <time>{{ trip.EndDate | date : "mediumDate" }}</time>
                 </span>
                 <br />
                 <span class="has-text-weight-bold">Tags: </span>

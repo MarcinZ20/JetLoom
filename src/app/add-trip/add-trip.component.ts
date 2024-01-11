@@ -5,7 +5,7 @@ import { TripsService } from '../services/trips.service';
 import { FormControl, ReactiveFormsModule, FormGroup, Validators} from '@angular/forms';
 import { linkValidator} from '../validators/link-validation.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faLink, faLocationDot, faCalculator, faPen} from '@fortawesome/free-solid-svg-icons';
+import { faLink, faLocationDot, faCalculator, faPen, faEarthAmerica} from '@fortawesome/free-solid-svg-icons';
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
@@ -34,7 +34,8 @@ export class AddTripComponent implements OnInit {
         Validators.required,
         linkValidator(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/i)
       ]),
-      TripDestination: new FormControl(''),
+      TripCountry: new FormControl(''),
+      TripCity: new FormControl(''),
       TripDescription: new FormControl(''),
       TripStartDate: new FormControl(''),
       TripEndDate: new FormControl(''),
@@ -52,6 +53,7 @@ export class AddTripComponent implements OnInit {
   faLocationDot = faLocationDot;
   faCalculator = faCalculator;
   faPen = faPen;
+  faEarthAmerica = faEarthAmerica;
 
   extractTags(tags: string): string[] {
     const tagArray = tags.split(',');
@@ -79,7 +81,8 @@ export class AddTripComponent implements OnInit {
 
     const newTrip: Trip = {
       TripName: tripData.TripName || '',
-      Destination: tripData.TripDestination || '',
+      Country: tripData.TripCountry || '',
+      City: tripData.TripCity || '',
       Description: tripData.TripDescription || '',
       StartDate: this.isValidDate(tripData.TripStartDate || '') ? new Date(tripData.TripStartDate || '') : new Date(),
       EndDate: this.isValidDate(tripData.TripEndDate || '') ? new Date(tripData.TripEndDate || '') : new Date(),
@@ -134,6 +137,6 @@ export class AddTripComponent implements OnInit {
       tag = tag.slice(1);
     }
 
-    return tag;
+    return '#' + tag;
   }
 }

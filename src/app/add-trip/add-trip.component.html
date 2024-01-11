@@ -1,7 +1,10 @@
-<form [formGroup]="TripForm" (ngSubmit)="onSubmit()" class="container">
+<form 
+    [formGroup]="TripForm" 
+    (ngSubmit)="onSubmit()" 
+    class="container">
     <div class="columns m-5 p-3">
         <div class="column has-background-white pb-0 pt-0">
-            <div class="field-body box">
+            <div class="container box">
                 <div class="field">
                     <label class="label">Trip Name</label>
                     <div class="control has-icons-left has-icons-right">
@@ -10,7 +13,7 @@
                     type="text" placeholder="Fantastic trip to ..."
                     required
                     minlength="5"
-                    maxlength="30"
+                    maxlength="40"
                     formControlName="TripName"
                     >
                     <span class="icon is-small is-left">
@@ -25,24 +28,44 @@
                     class="help is-danger">Name between 5 and 30 letters.
                     </p>
                 </div>
-                
+            </div>
+            <div class="field-body box">
                 <div class="field">
-                    <label class="label">Destination</label>
+                    <label class="label">Country</label>
                     <div class="control has-icons-left has-icons-right">
                     <input 
                     class="input" 
-                    type="text" placeholder="Maledives"
+                    type="text" placeholder="France"
                     required
                     minlength="3"
                     maxlength="30"
-                    formControlName="TripDestination">
+                    formControlName="TripCountry">
+                    <span class="icon is-small is-left">
+                        <fa-icon [icon]="faEarthAmerica"></fa-icon>
+                    </span>
+                    </div>
+                    <p
+                    *ngIf="TripForm.controls['TripCountry'].errors?.['minlength'] || TripForm.controls['TripCountry'].errors?.['maxlength'] || TripForm.controls['TripCountry'].errors?.['required']"
+                    class="help is-danger">Country name must be filled.
+                    </p>
+                </div>
+                <div class="field">
+                    <label class="label">City</label>
+                    <div class="control has-icons-left has-icons-right">
+                    <input 
+                    class="input" 
+                    type="text" placeholder="Cannes"
+                    required
+                    minlength="3"
+                    maxlength="30"
+                    formControlName="TripCity">
                     <span class="icon is-small is-left">
                         <fa-icon [icon]="faLocationDot"></fa-icon>
                     </span>
                     </div>
                     <p
-                    *ngIf="TripForm.controls['TripDestination'].errors?.['minlength'] || TripForm.controls['TripDestination'].errors?.['maxlength'] || TripForm.controls['TripDestination'].errors?.['required']"
-                    class="help is-danger">Destination must be filled.
+                    *ngIf="TripForm.controls['TripCity'].errors?.['minlength'] || TripForm.controls['TripCity'].errors?.['maxlength'] || TripForm.controls['TripCity'].errors?.['required']"
+                    class="help is-danger">City name must be filled.
                     </p>
                 </div>
             </div>
@@ -212,6 +235,9 @@
                     </p>
                 </div>
             <div class="container">
+                <span class="tag is-medium is-warning is-light ml-0 mt-1 mr-1 mb-1">
+                    Your tags:
+                </span>
                 <span 
                 *ngFor="let tag of tags" 
                 class="tag is-info is-light m-1 is-medium">
