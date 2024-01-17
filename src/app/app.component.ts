@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
 import { BtnToTopComponent } from './btn-to-top/btn-to-top.component';
 import { TripsService } from './services/trips.service';
+import { CurrencyExchangeRatesService } from './services/currency-exchange-rates.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ import { TripsService } from './services/trips.service';
     BtnToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [TripsService]
+  providers: [TripsService, CurrencyExchangeRatesService]
 })
 export class AppComponent {
   title = 'JetLoom';

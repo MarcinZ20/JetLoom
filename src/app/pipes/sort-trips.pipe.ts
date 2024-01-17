@@ -8,7 +8,6 @@ import { Trip } from '../trip';
 export class SortTripsPipe implements PipeTransform {
 
   transform(trips: Trip[], option: string): Trip[] {
-    console.log('Sorting trips by option: ', option);
     switch (option) {
       case 'lowestPrice':
         return trips.sort((a, b) => a.Price - b.Price);

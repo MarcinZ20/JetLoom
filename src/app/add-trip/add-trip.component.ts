@@ -68,8 +68,6 @@ export class AddTripComponent implements OnInit {
         return price * 0.86;
       case '¥':
         return price * 0.0054;
-      case 'zł':
-        return price * 0.2;
       default:
         return price;
     }

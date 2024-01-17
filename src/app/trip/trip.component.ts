@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Trip } from '../trip';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendar, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faCalendarAlt, faPlus, faMinus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-trip',
@@ -27,6 +27,9 @@ export class TripComponent implements Trip {
   // Icons
   faCalendar = faCalendar;
   faCalendarAlt = faCalendarAlt;
+  faPlus = faPlus;
+  faMinus = faMinus;
+  faArrowRight = faArrowRight;
 
   constructor() {}
 

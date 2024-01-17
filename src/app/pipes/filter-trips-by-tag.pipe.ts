@@ -8,7 +8,6 @@ import { Trip } from '../trip';
 export class FilterTripsByTagPipe implements PipeTransform {
 
   transform(trips: Trip[], tags: string[]): Trip[] {
-    console.log('Filtering trips by tags: ', tags);
 
     if (!trips) return [];
     if (!tags || tags.length === 0) return trips;

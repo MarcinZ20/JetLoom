@@ -1,0 +1,6 @@
+#bg-photo {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.473), rgba(255, 255, 255, 0.148)), url("../../assets/images/beach.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -1,49 +1,71 @@
 <section class="hero block is-halfheight frame">
-    <div class="hero-body">
-      <div class="">
-        <p class="title is-1 has-text-white">
-         Title
-        </p>
-        <p class="subtitle has-text-white">
-          Half height subtitle
+  <div class="hero-body">
+    <div class="">
+      <p class="title is-1 has-text-white">Title</p>
+      <p class="subtitle has-text-white">Half height subtitle</p>
+    </div>
+  </div>
+</section>
+<section class="container">
+  <div class="columns">
+    <div class="column">
+      <div class="container box">
+        <p class="subtitle is-5">Description</p>
+        <hr />
+        <p class="block">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ipsam
+          similique amet debitis iste recusandae blanditiis deleniti eveniet,
+          quisquam atque sint harum ab et, libero suscipit vero nulla error quas!
         </p>
       </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d156388.46657010043!2d20.89638776990362!3d52.23303347757917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc669a869f01%3A0x72f0be2a88ead3fc!2sWarsaw!5e0!3m2!1spl!2spl!4v1705469273626!5m2!1spl!2spl"
+        width="600"
+        height="300"
+        style="border: 0"
+        allowfullscreen="true"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
-  </section>
-<section class="container">
-    <div class="tabs">
-        <ul>
-          <li class="is-active"><a>Overview</a></li>
-          <li><a>Description</a></li>
-          <li><a>Attractions</a></li>
-          <li><a>Details</a></li>
-        </ul>
-    </div>
-
-    <!-- Overview -->
-    <div class="container box">
-        <p class="subtitle">
-            <fa-icon [icon]="faCalendarAlt"></fa-icon>
-            Date:
+    <div class="column">
+      <div class="container box block">
+        <p class="title is-3 m">Trip Cart</p>
+        <hr />
+        <p class="subtitle is-5 mb-1">Destination</p>
+        <p class="block">Warsaw, Poland</p>
+        <p class="subtitle is-5 mb-1">Date</p>
+        <p class="block">
+          <span class="mr-1">2018-01-01</span>
+          <span class="icon">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </span>
+          <span class="ml-1">2018-01-01</span>
         </p>
-        <p class="subtitle">
-            <fa-icon [icon]="faCalendarAlt"></fa-icon>
-            Price:
-        </p>
+        <p class="subtitle is-5 mb-1">Tags</p>
+        <div class="container block">
+          <p class="tag is-medium mr-1">#Fun</p>
+          <p class="tag is-medium mr-1">#Vacation</p>
+          <p class="tag is-medium mr-1">#Beach</p>
+          <p class="tag is-medium mr-1">#Summer</p>
+        </div>
+        <hr />
+        <p class="title is-3 block">Prize: 2099zł</p>
+        <div class="buttons">
+          <button class="button is-primary" id="buy-button">
+            <span class="icon">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </span>
+            <span>Buy</span>
+          </button>
+          <button class="button is-danger is-light" id="remove-button">
+            <span class="icon">
+              <fa-icon [icon]="faMinus"></fa-icon>
+            </span>
+            <span>Remove</span>
+          </button>
+        </div>
+      </div>
     </div>
-
-    <!-- Description -->
-    <div class="container box is-hidden">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quam alias adipisci voluptatibus est quae aliquam fugiat fuga numquam, consequatur, nostrum qui debitis! Error perferendis non distinctio inventore. Ad, distinctio.
-    </div>
-
-    <!-- Trip Attractions -->
-    <div class="container box is-hidden">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quidem ullam! Neque inventore ea molestias ipsum perferendis. Quidem excepturi fugit consectetur unde, voluptatum nisi laboriosam, totam, id quisquam natus ab.</p>
-    </div>
-
-    <!-- Trip Details -->
-    <div class="container box is-hidden">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quidem ullam! Neque inventore ea molestias ipsum perferendis. Quidem excepturi fugit consectetur unde, voluptatum nisi laboriosam, totam, id quisquam natus ab.</p>
-    </div>
+  </div>
 </section>

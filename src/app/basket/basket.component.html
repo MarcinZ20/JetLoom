@@ -1,1 +1,84 @@
-<p>basket works!</p>
+<div class="container">
+    <p class="title is-2 is-info">
+        Basket 
+        <span class="tag is-medium">5 items</span>
+    </p>
+    <section class="section columns">
+        <div class="column">
+            <div class="container">
+                <div class="item box">
+                    <div class="columns">
+                        <div class="column is-one-fifth">
+                            <figure class="image is-128x128" id="image">
+                            </figure>
+                        </div>
+                        <div class="column is-one-fifth" id="item">
+                            <p class="title is-5">Trip Name</p>
+                            <p class="subtitle is-6">Warsaw, Poland</p>
+                            <div class="field" id="input-field">
+                                <p class="control">
+                                    <input class="input" type="number" value="1" min="1">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="column">
+
+                        </div>
+                        <div class="column is-one-fifth">
+                            <button class="button is-danger is-outlined is-pulled-right">
+                                <span class="icon">
+                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                </span>
+                            </button>
+                            <div class="form">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-two-fifths">
+            <div class="container">
+                <div class="box">
+                    <p class="title is-3">Summary</p>
+                    <p class="subtitle is-5">You have 5 items in cart</p>
+                    <hr>
+                    <p class="title is-4 mb-0">Total:
+                        <span class="subtitle is-4">
+                            2099zł
+                        </span>
+                    </p>
+                    <p class="block is-gray">
+                        <span class="icon-text">
+                            <span class="icon">
+                                <fa-icon [icon]="faInfoCircle"></fa-icon>
+                            </span>
+                        </span>
+                        Taxes included
+                    </p>
+                    <button class="button is-primary is-fullwidth block">Buy</button>
+                    <div class="container block">
+                        <p class="mb-1">
+                            <span class="icon">
+                                <fa-icon [icon]="faEnvelope"></fa-icon>
+                            </span>
+                            We will send you a mail confirmation
+                        </p>
+                        <p class="mb-1">
+                            <span class="icon">
+                                <fa-icon [icon]="faLock"></fa-icon>
+                            </span>
+                            Your data is safe with us
+                        </p>
+                        <p class="mb-1">
+                            <span class="icon">
+                                <fa-icon [icon]="faRightLeft"></fa-icon>
+                            </span>
+                            Free returns within 30 days
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

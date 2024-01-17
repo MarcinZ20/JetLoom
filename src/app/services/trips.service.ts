@@ -28,17 +28,14 @@ export class TripsService {
   }
 
   fetchTrips(path: string = this.apiUrl): Promise<Trips> {
-    console.log("TripsService: fetchTrips()");
     return new Promise<Trips>((resolve, reject) => {
       this.http.get<Trips>(path)
         .subscribe((data: Trips) => {
           this.data = data;
           resolve(data);
           this.data.trips.forEach(trip => {
-            console.log(trip);
             trip.Capacity = trip.MaxCapacity;
           });
-          console.log("\nEND- - - - - - -\n");
           reject("Error: " + data);
         });
     });

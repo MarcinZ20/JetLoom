@@ -3,7 +3,7 @@ import { NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 
 import { Trips } from '../trips';
 import { Trip } from '../trip';
@@ -11,9 +11,11 @@ import { TripComponent } from '../trip/trip.component';
 import { SortTripsPipe } from '../pipes/sort-trips.pipe';
 import { FilterTripsByTagPipe } from '../pipes/filter-trips-by-tag.pipe';
 import { FilterTripsByTopBarPipe } from '../pipes/filter-trips-by-top-bar.pipe';
+import { FilterTripsByPricePipe } from '../pipes/filter-trips-by-price.pipe';
 import { TripsService } from '../services/trips.service';
+import { CurrencyExchangeRatesService } from '../services/currency-exchange-rates.service';
 import { AddTripComponent } from '../add-trip/add-trip.component';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import {
   faHeart,
@@ -26,6 +28,7 @@ import {
   faHome,
   faMoneyBillWave,
   faArrowUpWideShort,
+  faMoneyBillAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -40,6 +43,8 @@ import {
     SortTripsPipe,
     FilterTripsByTagPipe,
     FilterTripsByTopBarPipe,
+    FilterTripsByPricePipe,
+    CurrencyPipe,
     DatePipe,
     AddTripComponent,
     ReactiveFormsModule,
@@ -51,9 +56,14 @@ import {
 })
 export class TripsComponent implements OnInit {
   public trips: Trip[];
+
   public selectedOption: string = 'lowestPrice';
+  public selectedCurrency: string = 'EUR';
+  public exchangeRate = 1;
   public selectedTags: string[] = [];
   public selectedTopBarFilter: string[] = [];
+  public selectedSideBarFilter: number[] = [];
+
   public topFilterForm: FormGroup;
   public sideFilterForm: FormGroup;
 
@@ -68,16 +78,28 @@ export class TripsComponent implements OnInit {
   faHome = faHome;
   faMoneyBillWave = faMoneyBillWave;
   faArrowUpWideShort = faArrowUpWideShort;
+  faMoneyBillAlt = faMoneyBillAlt;
 
-  constructor(private service: TripsService) {
+  constructor(
+    private service: TripsService, 
+    private currencyService: CurrencyExchangeRatesService) {
     this.trips = [];
   }
 
   ngOnInit() {
-    console.log('ngOnInit - TripsComponent');
+
+    // Get trips list
     this.service.fetchTrips().then((data: Trips) => {
       this.trips = data.trips;
     });
+
+    // Get currency exchange rates
+    this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
+      console.log('Currency exchange rates: ', data)
+      this.exchangeRate = data.rates[this.selectedCurrency];
+    });
+
+    console.log('Exchange rate: ' + this.exchangeRate)
 
     this.topFilterForm = new FormGroup({
       DestinationFilter: new FormControl(''),
@@ -86,8 +108,8 @@ export class TripsComponent implements OnInit {
     });
 
     this.sideFilterForm = new FormGroup({
-      PriceFilter: new FormControl(''),
-      RatingFilter: new FormControl(''),
+      PriceFrom: new FormControl(''),
+      PriceTo: new FormControl(''),
     });
   }
 
@@ -151,20 +173,27 @@ export class TripsComponent implements OnInit {
     const endDate = filterData.EndDateFilter || '';
 
     this.selectedTopBarFilter = [destination, startDate, endDate];
-
-    console.log('Filtering trips by destination and date');
-    console.log('Destination: ', destination);
-    console.log('Start date: ', startDate);
-    console.log('End date: ', endDate);
   }
 
-  // TODO: Implement
-  // All kinds of filtering
-  // Filter by price
-  // Filter by duration
-  // Filter by location
-  // Filter by rating
-  // Filter by date
-  // Filter by type
-  // Filter by name
+  filterTripsByPrice() {
+    let filterData = this.sideFilterForm.value;
+
+    const price_from = filterData.PriceFrom || null;
+    const price_to = filterData.PriceTo || null;
+
+    this.selectedSideBarFilter = [price_from, price_to, this.exchangeRate];
+
+    this.sideFilterForm.reset();
+  }
+
+  updateExchangeRate() {
+    this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
+      console.log('Currency exchange rates: ', data)
+      this.exchangeRate = data.rates[this.selectedCurrency];
+    });
+  }
+
+  convertPriceToSelectedCurrency(number: number) {
+    return number * this.exchangeRate;
+  }
 }

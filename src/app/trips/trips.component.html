@@ -139,57 +139,78 @@
         </div>
         <hr />
         <div class="field">
-          <label class="label">Rating</label>
-          <div class="control">
-            <div class="select">
-              <select>
-                <option>1 star</option>
-                <option>2 stars</option>
-                <option>3 stars</option>
-                <option>4 stars</option>
-                <option>5 stars</option>
+          <label class="label">Currency</label>
+          <div class="control has-icons-left">
+            <div class="select is-rounded">
+              <select 
+                [(ngModel)]="selectedCurrency" 
+                (ngModelChange)="updateExchangeRate()">
+                <option>EUR</option>
+                <option>GBP </option>
+                <option>USD</option>
+                <option>JPY</option>
               </select>
             </div>
-          </div>
-        </div>
-        <hr />
-        <div class="field">
-          <label class="label">Price from:</label>
-          <div class="control has-icons-left">
-            <input class="input" type="number" placeholder="Price" />
             <span class="icon is-small is-left">
-              <fa-icon [icon]="faMoneyBillWave"></fa-icon>
-            </span>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Price to:</label>
-          <div class="control has-icons-left">
-            <input class="input" type="number" placeholder="Price" />
-            <span class="icon is-small is-left">
-              <fa-icon [icon]="faMoneyBillWave"></fa-icon>
+              <fa-icon [icon]="faMoneyBillAlt"></fa-icon>
             </span>
           </div>
         </div>
         <hr />
-        <p class="buttons">
-          <button class="button is-primary">Filter</button>
-          <button class="button is-danger is-light">Cancel</button>
-        </p>
+        <form 
+        [formGroup]="sideFilterForm" 
+        (ngSubmit)="filterTripsByPrice()">
+          <div class="field">
+            <label class="label">Price from:</label>
+            <div class="control has-icons-left">
+              <input
+                class="input"
+                type="number"
+                placeholder="Price"
+                formControlName="PriceFrom"
+              />
+              <span class="icon is-small is-left">
+                <fa-icon [icon]="faMoneyBillWave"></fa-icon>
+              </span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Price to:</label>
+            <div class="control has-icons-left">
+              <input
+                class="input"
+                type="number"
+                placeholder="Price"
+                formControlName="PriceTo"
+              />
+              <span class="icon is-small is-left">
+                <fa-icon [icon]="faMoneyBillWave"></fa-icon>
+              </span>
+            </div>
+          </div>
+          <hr />
+          <div class="control">
+            <button 
+            type="submit"
+            class="button is-primary is-fullwidth">
+              Filter
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
     <!-- LEFT FILTERS END -->
 
     <!-- TRIPS START -->
-    
+
     <div class="column">
       <div
         *ngFor="
           let trip of trips
-          
             | filterTripsByTopBar : selectedTopBarFilter
             | filterTripsByTag : selectedTags
+            | filterTripsByPrice : selectedSideBarFilter
             | sortTrips : selectedOption
         "
         class="container block box"
@@ -233,7 +254,7 @@
                   <div class="column is-half">
                     <p class="title is-3">
                       Price:
-                      <span class="has-text-primary"> {{ trip.Price }}$ </span>
+                      <span class="has-text-primary"> {{ convertPriceToSelectedCurrency(trip.Price) | currency:selectedCurrency:'symbol':'1.2-2' }}</span>
                     </p>
                   </div>
                   <div class="column">
