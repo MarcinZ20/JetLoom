@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 
-import { Trips } from '../trips';
 import { Trip } from '../trip';
-import { TripComponent } from '../trip/trip.component';
+import { PaginatePipe } from '../pipes/paginate.pipe';
 import { SortTripsPipe } from '../pipes/sort-trips.pipe';
 import { FilterTripsByTagPipe } from '../pipes/filter-trips-by-tag.pipe';
 import { FilterTripsByTopBarPipe } from '../pipes/filter-trips-by-top-bar.pipe';
 import { FilterTripsByPricePipe } from '../pipes/filter-trips-by-price.pipe';
 import { TripsService } from '../services/trips.service';
+import { BasketService } from '../services/basket.service';
 import { CurrencyExchangeRatesService } from '../services/currency-exchange-rates.service';
-import { AddTripComponent } from '../add-trip/add-trip.component';
+import { NotificationService } from '../services/notification.service';
+import { ReviewService } from '../services/review.service';
 import { FormControl, FormGroup } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import {
   faHeart,
   faMinus,
@@ -28,8 +30,10 @@ import {
   faHome,
   faMoneyBillWave,
   faArrowUpWideShort,
-  faMoneyBillAlt
+  faMoneyBillAlt,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-trips',
@@ -38,34 +42,41 @@ import {
     NgFor,
     HttpClientModule,
     FontAwesomeModule,
-    TripComponent,
     FormsModule,
     SortTripsPipe,
     FilterTripsByTagPipe,
     FilterTripsByTopBarPipe,
     FilterTripsByPricePipe,
     CurrencyPipe,
+    PaginatePipe,
     DatePipe,
-    AddTripComponent,
     ReactiveFormsModule,
     FormsModule,
+    RouterLink,
   ],
-  providers: [TripsService],
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
 })
-export class TripsComponent implements OnInit {
+export class TripsComponent implements OnInit, OnDestroy {
+  // Trips
   public trips: Trip[];
 
   public selectedOption: string = 'lowestPrice';
-  public selectedCurrency: string = 'EUR';
+  public selectedCurrency: string;
   public exchangeRate = 1;
   public selectedTags: string[] = [];
   public selectedTopBarFilter: string[] = [];
   public selectedSideBarFilter: number[] = [];
 
+  // Forms
   public topFilterForm: FormGroup;
   public sideFilterForm: FormGroup;
+
+  // Pagination
+  public currentPage: number = 1;
+  public tripsPerPage: number = 10;
+  private countSubscription: Subscription;
+  public pagesCount: number;
 
   // Icons
   faPlus = faPlus;
@@ -79,27 +90,36 @@ export class TripsComponent implements OnInit {
   faMoneyBillWave = faMoneyBillWave;
   faArrowUpWideShort = faArrowUpWideShort;
   faMoneyBillAlt = faMoneyBillAlt;
+  faTrash = faTrash;
 
   constructor(
-    private service: TripsService, 
-    private currencyService: CurrencyExchangeRatesService) {
-    this.trips = [];
-  }
+    private service: TripsService,
+    private basketService: BasketService,
+    private currencyService: CurrencyExchangeRatesService,
+    private reviewService: ReviewService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
-
     // Get trips list
-    this.service.fetchTrips().then((data: Trips) => {
-      this.trips = data.trips;
+    this.service.getTrips().subscribe((trips) => {
+      this.trips = trips;
+    });
+
+    // Observable to get trips count
+    this.countSubscription = this.getTripsCount().subscribe((count) => {
+      this.pagesCount = count;
     });
 
     // Get currency exchange rates
     this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
-      console.log('Currency exchange rates: ', data)
       this.exchangeRate = data.rates[this.selectedCurrency];
     });
 
-    console.log('Exchange rate: ' + this.exchangeRate)
+    // Get currency
+    this.currencyService.getCurrency().subscribe((currency) => {
+      this.selectedCurrency = currency;
+    });
 
     this.topFilterForm = new FormGroup({
       DestinationFilter: new FormControl(''),
@@ -111,34 +131,48 @@ export class TripsComponent implements OnInit {
       PriceFrom: new FormControl(''),
       PriceTo: new FormControl(''),
     });
+
+    this.notificationService.notification$.subscribe((notification) => {
+      console.log('Notification: ' + notification);
+    });
   }
 
-  getTripsCount() {
-    return this.trips.length;
+  ngOnDestroy() {
+    this.topFilterForm.reset();
+    this.sideFilterForm.reset();
+    this.countSubscription.unsubscribe();
+  }
+
+  getTripsCount(): Observable<number> {
+    return this.service.getTripsCount();
+  }
+
+  // Basket logic
+
+  calculateTripAvailability(trip: Trip) {
+    return trip.MaxCapacity - this.basketService.getTripQuantity(trip);
   }
 
   addToCart(trip: Trip) {
-    trip.Capacity--;
+    this.basketService.addToBasket(trip);
   }
 
   removeFromCart(trip: Trip) {
-    trip.Capacity++;
+    this.basketService.removeFromBasket(trip);
   }
 
   addToFavorites(trip: Trip) {
     console.log('Added to favorites: ' + trip.TripName);
   }
 
-  getHighestPriceTrip() {
-    return this.trips.reduce((highest, trip) => {
-      return trip.Price > highest.Price ? trip : highest;
-    }, this.trips[0]);
+  // Filters and sorting
+
+  getHighestPriceTripId(): number {
+    return this.service.getMostExpensiveTrip(this.trips).TripId;
   }
 
-  getLowestPriceTrip() {
-    return this.trips.reduce((lowest, trip) => {
-      return trip.Price < lowest.Price ? trip : lowest;
-    }, this.trips[0]);
+  getLowestPriceTrip(): number {
+    return this.service.getLeastExpensiveTrip(this.trips).TripId;
   }
 
   addTagToFilters(event: Event) {
@@ -165,35 +199,81 @@ export class TripsComponent implements OnInit {
     console.log('Removed tag from filters: ', label.innerText.trim());
   }
 
-  filterTripsByDestinationAndDate() {
+  filterTripsByTopBar() {
     let filterData = this.topFilterForm.value;
 
-    const destination = filterData.DestinationFilter || '';
-    const startDate = filterData.StartDateFilter || '';
-    const endDate = filterData.EndDateFilter || '';
+    const destination = filterData.DestinationFilter || null;
+    const startDate = filterData.StartDateFilter || null;
+    const endDate = filterData.EndDateFilter || null;
 
     this.selectedTopBarFilter = [destination, startDate, endDate];
+    this.topFilterForm.reset();
   }
 
   filterTripsByPrice() {
+    console.log('Filtering trips by price')
     let filterData = this.sideFilterForm.value;
 
     const price_from = filterData.PriceFrom || null;
     const price_to = filterData.PriceTo || null;
 
     this.selectedSideBarFilter = [price_from, price_to, this.exchangeRate];
-
     this.sideFilterForm.reset();
   }
 
+  // Exchange rates
   updateExchangeRate() {
     this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
-      console.log('Currency exchange rates: ', data)
       this.exchangeRate = data.rates[this.selectedCurrency];
     });
+    this.currencyService.setCurrency(this.selectedCurrency);
   }
 
   convertPriceToSelectedCurrency(number: number) {
     return number * this.exchangeRate;
+  }
+
+  // Pagination
+
+  nextPage(): void {
+    if (this.currentPage < this.pagesCount) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  goToPage(pageNumber: number): void {
+    console.log('Go to page: ', pageNumber)
+    this.currentPage = pageNumber;
+  }
+
+  getPages(): number[] {
+    return Array.from(
+      Array(Math.ceil(this.pagesCount / this.tripsPerPage)).keys()
+    ).map((i) => i + 1);
+  }
+
+  paginate(trips: Trip[]): Trip[] {
+    const startIndex = (this.currentPage - 1) * this.tripsPerPage;
+    const endIndex = startIndex + this.tripsPerPage;
+    return trips.slice(startIndex, endIndex);
+  }
+
+  // Reviews
+  getReviews(trip: Trip) {
+    return this.reviewService.getReviews(trip);
+  }
+
+  getAverageRating(trip: Trip) {
+    return this.reviewService.getAverageRating(trip);
+  }
+
+  removeTrip(trip: Trip) {
+    this.service.removeTrip(trip);
   }
 }

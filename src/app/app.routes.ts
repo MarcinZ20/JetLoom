@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { AddTripComponent } from './add-trip/add-trip.component';
 import { BasketComponent } from './basket/basket.component';
 
+
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'trips', component: TripsComponent },

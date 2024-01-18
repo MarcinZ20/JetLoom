@@ -1,64 +1,66 @@
 <section class="hero block is-halfheight frame">
   <div class="hero-body">
     <div class="">
-      <p class="title is-1 has-text-white">Title</p>
-      <p class="subtitle has-text-white">Half height subtitle</p>
+      <p class="title is-1 has-text-white">{{ trip.TripName }}</p>
+      <p class="subtitle has-text-white">{{ trip.City }}, {{ trip.Country}}</p>
     </div>
   </div>
 </section>
-<section class="container">
+<section class="container mb-4">
   <div class="columns">
     <div class="column">
       <div class="container box">
         <p class="subtitle is-5">Description</p>
         <hr />
         <p class="block">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ipsam
-          similique amet debitis iste recusandae blanditiis deleniti eveniet,
-          quisquam atque sint harum ab et, libero suscipit vero nulla error quas!
+          {{ trip.Description }}
         </p>
       </div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d156388.46657010043!2d20.89638776990362!3d52.23303347757917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc669a869f01%3A0x72f0be2a88ead3fc!2sWarsaw!5e0!3m2!1spl!2spl!4v1705469273626!5m2!1spl!2spl"
-        width="600"
-        height="300"
-        style="border: 0"
-        allowfullscreen="true"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
+      <div class="container box" id="map"></div>
     </div>
     <div class="column">
       <div class="container box block">
         <p class="title is-3 m">Trip Cart</p>
         <hr />
         <p class="subtitle is-5 mb-1">Destination</p>
-        <p class="block">Warsaw, Poland</p>
+        <p class="block">{{ trip.City }}, {{ trip.Country}}</p>
         <p class="subtitle is-5 mb-1">Date</p>
         <p class="block">
-          <span class="mr-1">2018-01-01</span>
+          <span class="mr-1">{{ trip.StartDate }}</span>
           <span class="icon">
             <fa-icon [icon]="faArrowRight"></fa-icon>
           </span>
-          <span class="ml-1">2018-01-01</span>
+          <span class="ml-1">{{ trip.EndDate }}</span>
         </p>
         <p class="subtitle is-5 mb-1">Tags</p>
-        <div class="container block">
-          <p class="tag is-medium mr-1">#Fun</p>
-          <p class="tag is-medium mr-1">#Vacation</p>
-          <p class="tag is-medium mr-1">#Beach</p>
-          <p class="tag is-medium mr-1">#Summer</p>
+        <div 
+          class="container block">
+          <p 
+            *ngFor="let tag of trip.Tags"
+            class="tag is-medium mr-1 mb-1">{{ tag }}</p>
         </div>
         <hr />
-        <p class="title is-3 block">Prize: 2099zł</p>
+        <p class="title is-3 block">Price: 
+          <span>
+            {{ trip.Price | currency:currency:'symbol':'1.2-2' }}
+          </span>
+        </p>
         <div class="buttons">
-          <button class="button is-primary" id="buy-button">
+          <button 
+            class="button is-primary" 
+            id="buy-button"
+            (click)="addToCart()"
+            [disabled]="!getTripAvailability()">
             <span class="icon">
               <fa-icon [icon]="faPlus"></fa-icon>
             </span>
             <span>Buy</span>
           </button>
-          <button class="button is-danger is-light" id="remove-button">
+          <button 
+            class="button is-danger is-light" 
+            id="remove-button"
+            (click)="removeFromCart()"
+            [disabled]="getTripAvailability() === trip.MaxCapacity">
             <span class="icon">
               <fa-icon [icon]="faMinus"></fa-icon>
             </span>
@@ -67,5 +69,21 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <p class="title is-3">Reviews</p>
+    <hr />
+    <div *ngFor="let review of trip.Reviews">
+      <app-review [review]="review"></app-review>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <p class="title is-3">Add Review</p>
+    <hr />
+    <app-review-form [tripId]="trip.TripId"></app-review-form>
   </div>
 </section>

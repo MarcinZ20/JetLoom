@@ -38,3 +38,7 @@
   -moz-box-shadow: 0px 0px 21px 2px hsl(171, 100%, 41%);
   box-shadow: 0px 0px 10px 2px hsl(171, 100%, 41%);
 }
+
+.is-current a {
+  border: solid 2px hsl(229, 53%,  53%);
+}

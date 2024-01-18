@@ -4,12 +4,6 @@
     background-size: cover;
 }
 
-#item {
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between
-}
-
 #input-field {
-    margin-top: auto;
+    max-width: 100px;
 }

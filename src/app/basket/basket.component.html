@@ -1,84 +1,116 @@
 <div class="container">
-    <p class="title is-2 is-info">
-        Basket 
-        <span class="tag is-medium">5 items</span>
-    </p>
-    <section class="section columns">
-        <div class="column">
-            <div class="container">
-                <div class="item box">
-                    <div class="columns">
-                        <div class="column is-one-fifth">
-                            <figure class="image is-128x128" id="image">
-                            </figure>
-                        </div>
-                        <div class="column is-one-fifth" id="item">
-                            <p class="title is-5">Trip Name</p>
-                            <p class="subtitle is-6">Warsaw, Poland</p>
-                            <div class="field" id="input-field">
-                                <p class="control">
-                                    <input class="input" type="number" value="1" min="1">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="column">
-
-                        </div>
-                        <div class="column is-one-fifth">
-                            <button class="button is-danger is-outlined is-pulled-right">
-                                <span class="icon">
-                                    <fa-icon [icon]="faTrash"></fa-icon>
-                                </span>
-                            </button>
-                            <div class="form">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <p class="title is-2 is-info">
+    Basket
+    <span class="tag is-medium">{{ basket.size }} items</span>
+  </p>
+  <section class="section columns">
+    <div class="column">
+      <div class="container">
+        <div 
+          class="item box is-clickable" 
+          *ngFor="let trip of basket.keys()"
+          [routerLink]="['/trip/' + trip.TripId]">
+          <div class="columns">
+            <div class="column is-one-fifth">
+              <figure class="image is-128x128" id="image"></figure>
             </div>
-        </div>
-        <div class="column is-two-fifths">
-            <div class="container">
-                <div class="box">
-                    <p class="title is-3">Summary</p>
-                    <p class="subtitle is-5">You have 5 items in cart</p>
-                    <hr>
-                    <p class="title is-4 mb-0">Total:
-                        <span class="subtitle is-4">
-                            2099zł
-                        </span>
-                    </p>
-                    <p class="block is-gray">
-                        <span class="icon-text">
-                            <span class="icon">
-                                <fa-icon [icon]="faInfoCircle"></fa-icon>
-                            </span>
-                        </span>
-                        Taxes included
-                    </p>
-                    <button class="button is-primary is-fullwidth block">Buy</button>
-                    <div class="container block">
-                        <p class="mb-1">
-                            <span class="icon">
-                                <fa-icon [icon]="faEnvelope"></fa-icon>
-                            </span>
-                            We will send you a mail confirmation
-                        </p>
-                        <p class="mb-1">
-                            <span class="icon">
-                                <fa-icon [icon]="faLock"></fa-icon>
-                            </span>
-                            Your data is safe with us
-                        </p>
-                        <p class="mb-1">
-                            <span class="icon">
-                                <fa-icon [icon]="faRightLeft"></fa-icon>
-                            </span>
-                            Free returns within 30 days
-                        </p>
-                    </div>
-                </div>
+            <div class="column is-two-fifths" id="item">
+              <p class="title is-5">{{ trip.TripName }}</p>
+              <p class="subtitle is-7">{{ trip.City }}, {{ trip.Country }}</p>
+              <div class="field" id="input-field">
+                <p class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    min="1"
+                    [value]="basket.get(trip)"
+                    [max]="trip.MaxCapacity"
+                    (change)="updateTripQuantity($event, trip)"
+                  />
+                </p>
+              </div>
             </div>
+            <div class="column"></div>
+            <div class="column is-one-fifth">
+              <div class="container has-background-warning">
+                <button
+                  class="button is-danger is-outlined is-pulled-right"
+                  (click)="deleteTripFromBasket(trip)"
+                >
+                  <span class="icon">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </span>
+                </button>
+              </div>
+              <br />
+              <p
+                *ngIf="basket.get(trip)" 
+                class="title is-5 is-pulled-right mt-6">
+                {{ (trip.Price || 0) * (basket.get(trip) || 0) | currency:currency:'symbol':'1.2-2' }}
+              </p>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="column is-two-fifths">
+      <div class="container">
+        <div class="box">
+          <p class="title is-3">Summary</p>
+          <p *ngIf="basket.size !== 0" class="subtitle is-5">
+            Wanna buy more?
+            <a class="is-link is-underlined" [routerLink]="['/trips']"
+            >Go back to shopping</a
+            >
+        </p>
+        <p *ngIf="basket.size === 0" class="subtitle is-5">
+            <a class="is-link is-underlined" [routerLink]="['/trips']"
+            >Go back to shopping</a
+            >
+        </p>
+        <hr />
+          <p class="title is-4 mb-0">
+            Total:
+            <span class="subtitle is-4">
+              {{ getBasketTotalPrice() | currency:currency:'symbol':'1.2-2' }}
+            </span>
+          </p>
+          <p class="block is-gray">
+            <span class="icon-text">
+              <span class="icon">
+                <fa-icon [icon]="faInfoCircle"></fa-icon>
+              </span>
+            </span>
+            Taxes included
+          </p>
+          <button
+            [disabled]="basket.size === 0"
+            class="button is-primary is-fullwidth block"
+          >
+            Buy
+          </button>
+          <div class="container block">
+            <p class="mb-1">
+              <span class="icon">
+                <fa-icon [icon]="faEnvelope"></fa-icon>
+              </span>
+              We will send you a mail confirmation
+            </p>
+            <p class="mb-1">
+              <span class="icon">
+                <fa-icon [icon]="faLock"></fa-icon>
+              </span>
+              Your data is safe with us
+            </p>
+            <p class="mb-1">
+              <span class="icon">
+                <fa-icon [icon]="faRightLeft"></fa-icon>
+              </span>
+              Free returns within 30 days
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

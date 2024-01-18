@@ -7,6 +7,9 @@ import { FooterComponent } from './footer/footer.component';
 import { BtnToTopComponent } from './btn-to-top/btn-to-top.component';
 import { TripsService } from './services/trips.service';
 import { CurrencyExchangeRatesService } from './services/currency-exchange-rates.service';
+import { BasketService } from './services/basket.service';
+import { ReviewService } from './services/review.service';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +23,8 @@ import { CurrencyExchangeRatesService } from './services/currency-exchange-rates
     BtnToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [TripsService, CurrencyExchangeRatesService]
+  providers: [TripsService, CurrencyExchangeRatesService, BasketService, ReviewService, NotificationService]
 })
 export class AppComponent {
   title = 'JetLoom';
-
-  constructor(private service: TripsService) { 
-    console.log("AppComponent: constructor()");
-    this.service.fetchTrips();
-    console.log("AppComponent: constructor() - END");
-  }
 }

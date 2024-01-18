@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { Renderer2 } from '@angular/core';
+
 
 @Component({
   selector: 'app-btn-to-top',
@@ -15,9 +15,7 @@ export class BtnToTopComponent {
   btnToTop = document.getElementById('btn-to-top');
 
   constructor() { 
-    // Renderer2.listen('window', 'scroll', () => {
-    //   this.showBtn();
-    // });
+    window.onscroll = () => { this.showBtn() };
   }
 
   scrollToTop() {

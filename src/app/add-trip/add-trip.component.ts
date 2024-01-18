@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLink, faLocationDot, faCalculator, faPen, faEarthAmerica} from '@fortawesome/free-solid-svg-icons';
 import { NgIf, NgFor } from '@angular/common';
 
+
 @Component({
   selector: 'app-add-trip',
   standalone: true,
@@ -19,14 +20,13 @@ import { NgIf, NgFor } from '@angular/common';
     NgFor],
     templateUrl: './add-trip.component.html',
     styleUrl: './add-trip.component.css',
-    providers: [TripsService]
 })
 export class AddTripComponent implements OnInit {
 
   TripForm: FormGroup;
   tags: string[] = [];
 
-  constructor(private service: TripsService) { }
+  constructor(private tripsService: TripsService) { }
 
   ngOnInit(): void {
     this.TripForm = new FormGroup({
@@ -78,20 +78,21 @@ export class AddTripComponent implements OnInit {
     const tripData = this.TripForm.value;
 
     const newTrip: Trip = {
-      TripName: tripData.TripName || '',
-      Country: tripData.TripCountry || '',
-      City: tripData.TripCity || '',
-      Description: tripData.TripDescription || '',
-      StartDate: this.isValidDate(tripData.TripStartDate || '') ? new Date(tripData.TripStartDate || '') : new Date(),
-      EndDate: this.isValidDate(tripData.TripEndDate || '') ? new Date(tripData.TripEndDate || '') : new Date(),
-      MaxCapacity: Number(tripData.TripCapacity) || 20,
-      Capacity: Number(tripData.TripCapacity),
-      Image: tripData.TripImage || '',
-      Price: this.changeCurrency(tripData.TripPriceCurrency || '', Number(tripData.TripPrice)) || 2000,
+      TripId: 0,
+      TripName: tripData.TripName,
+      Country: tripData.TripCountry,
+      City: tripData.TripCity,
+      Description: tripData.TripDescription,
+      StartDate: this.isValidDate(tripData.TripStartDate) ? new Date(tripData.TripStartDate) : new Date(),
+      EndDate: this.isValidDate(tripData.TripEndDate) ? new Date(tripData.TripEndDate) : new Date(),
+      MaxCapacity: Number(tripData.TripCapacity),
+      Image: tripData.TripImage,
+      Price: this.changeCurrency(tripData.TripPriceCurrency, Number(tripData.TripPrice)),
       Tags: this.tags,
+      Reviews: []
     }
     console.log(newTrip);
-    this.service.addTrip(newTrip);
+    this.tripsService.addTrip(newTrip);
   }
 
   addTag() {

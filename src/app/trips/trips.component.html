@@ -7,7 +7,7 @@
     <hr />
     <form
       [formGroup]="topFilterForm"
-      (ngSubmit)="filterTripsByDestinationAndDate()"
+      (ngSubmit)="filterTripsByTopBar()"
       class="columns"
     >
       <div class="column is-two-fifths">
@@ -63,21 +63,31 @@
         </div>
       </div>
     </form>
-    <div class="control has-icons-left">
-      <div class="select is-rounded">
-        <select [(ngModel)]="selectedOption">
-          <option value="lowestPrice">Price: from lowest</option>
-          <option value="highestPrice">Price: from highest</option>
-          <option value="az">From A to Z</option>
-          <option value="za">From Z to A</option>
-          <option value="lowestRating">Rating: from lowest</option>
-          <option value="highestRating">Rating: from highest</option>
-          <option value="longestDuration">Duration: from longest</option>
-          <option value="shortestDuration">Duration: from shortest</option>
-        </select>
+    <div class="container columns">
+      <div class="column is-one-fifth">
+        <div class="select is-rounded">
+          <select 
+            [(ngModel)]="selectedOption">
+            <option value="lowestPrice">Price: from lowest</option>
+            <option value="highestPrice">Price: from highest</option>
+            <option value="az">From A to Z</option>
+            <option value="za">From Z to A</option>
+            <option value="lowestRating">Rating: from lowest</option>
+            <option value="highestRating">Rating: from highest</option>
+            <option value="longestDuration">Duration: from longest</option>
+            <option value="shortestDuration">Duration: from shortest</option>
+          </select>
+        </div>
       </div>
-      <div class="icon is-small is-left">
-        <fa-icon [icon]="faArrowUpWideShort"></fa-icon>
+      <div class="column is-one-fifth control">
+        <div class="select is-rounded">
+          <select [(ngModel)]="tripsPerPage">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="15">15 per page</option>
+            <option value="20">20 per page</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -214,13 +224,14 @@
             | sortTrips : selectedOption
         "
         class="container block box"
-        [class.has-background-warning-light]="trip.Capacity <= 5"
-        [class.has-background-grey-dark]="trip.Capacity === 0"
-        [class.most-expensive]="trip === getHighestPriceTrip()"
-        [class.least-expensive]="trip === getLowestPriceTrip()"
+        [class.has-background-warning-light]="calculateTripAvailability(trip) <= 5"
+        [class.has-background-grey-dark]="calculateTripAvailability(trip) === 0"
+        [class.most-expensive]="trip.TripId === getHighestPriceTripId()"
+        [class.least-expensive]="trip.TripId === getLowestPriceTrip()"
         id="trip"
       >
-        <div class="container">
+        <div 
+          class="container">
           <div class="columns">
             <div class="column is-one-quarter">
               <figure class="image is-square">
@@ -232,7 +243,11 @@
               </figure>
             </div>
             <div class="column is-three-fifths">
-              <p class="title is-3">{{ trip.TripName }}</p>
+              <p 
+                class="title is-3 is-clickable"
+                [routerLink]="['/trip', trip.TripId]">
+                {{ trip.TripName }}
+              </p>
               <p class="subtitle is-5 has-text-grey">
                 {{ trip.Country }}, {{ trip.City }}
               </p>
@@ -263,7 +278,7 @@
                         class="button is-primary"
                         id="buy-button"
                         (click)="addToCart(trip)"
-                        [disabled]="trip.Capacity === 0"
+                        [disabled]="calculateTripAvailability(trip) === 0"
                       >
                         <span class="icon">
                           <fa-icon [icon]="faPlus"></fa-icon>
@@ -274,7 +289,7 @@
                         class="button is-danger is-light"
                         id="remove-button"
                         (click)="removeFromCart(trip)"
-                        [disabled]="trip.Capacity === trip.MaxCapacity"
+                        [disabled]="calculateTripAvailability(trip) === trip.MaxCapacity"
                       >
                         <span class="icon">
                           <fa-icon [icon]="faMinus"></fa-icon>
@@ -293,20 +308,38 @@
                   <div class="heart-container" (click)="addToFavorites(trip)">
                     <fa-icon [icon]="faHeart" class="heart"></fa-icon>
                   </div>
+                  <div class="heart-container mt-2" (click)="removeTrip(trip)">
+                    <fa-icon [icon]="faTrash" class="trash"></fa-icon>
+                  </div>
                 </div>
               </div>
-              <p class="subtitle is-5 mb-1 mt-5">Rating:</p>
-              <div class="rating">
-                <fa-icon [icon]="faStar"></fa-icon>
-                <fa-icon [icon]="faStar"></fa-icon>
-                <fa-icon [icon]="faStar"></fa-icon>
-                <fa-icon [icon]="faStar"></fa-icon>
-                <fa-icon [icon]="faStarHalfStroke"></fa-icon>
-              </div>
-              <button class="button is-info mt-3">Details</button>
             </div>
           </div>
         </div>
+      </div>
+      <div class="container block mb-5">
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+          <a 
+            class="pagination-previous"
+            (click)="previousPage()">
+            Previous
+          </a>
+          <a 
+            class="pagination-next"
+            (click)="nextPage()">
+            Next page
+          </a>
+          <ul class="pagination-list">
+            <li 
+              *ngFor="let page of getPages()" 
+              [class.is-current]="currentPage === page">
+              <a 
+                class="pagination-link" 
+                (click)="goToPage(page)"
+                >{{ page }}</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

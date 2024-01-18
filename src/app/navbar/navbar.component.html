@@ -33,6 +33,9 @@
             <a class="navbar-item" [routerLink]="['/contact']">
               Contact
             </a>
+            <a class="navbar-item" [routerLink]="['/add-trip']">
+              Add trip
+            </a>
             <hr class="navbar-divider">
             <a class="navbar-item" [routerLink]="['/contact']">
               Report an issue
@@ -63,12 +66,12 @@
                 </a>
               </div>
             </div>
-            <a class="button is-outlined">
+            <a class="button is-outlined" [routerLink]="['/basket']">
               <span class="icon is-small">
                 <fa-icon [icon]="faShoppingCart"></fa-icon>
               </span>
               <span>
-                Cart
+                Cart: {{ basketSize }}
               </span>
             </a>
           </div>
