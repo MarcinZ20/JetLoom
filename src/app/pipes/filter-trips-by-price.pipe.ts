@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Trip } from '../trip';
-import { of } from 'rxjs';
 
 @Pipe({
   name: 'filterTripsByPrice',

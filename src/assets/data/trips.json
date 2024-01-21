@@ -11,7 +11,7 @@
       "MaxCapacity": 20,
       "Description": "Unforgettable vacation by the beautiful Mediterranean Sea.",
       "Image": "https://example.com/vacation.jpg",
-      "Tags": ["#Vacation", "#Beach", "#Summer", "#Relax"]
+      "Tags": ["#Vacation", "#Beach", "#Summer", "#Fun"]
     },
     {
       "TripId": 2,
@@ -24,7 +24,7 @@
       "MaxCapacity": 22,
       "Description": "Relax on the paradise beaches of Hawaii.",
       "Image": "https://example.com/hawaii_beaches.jpg",
-      "Tags": ["#Vacation", "#Beach", "#Summer", "#Relax"]
+      "Tags": ["#Vacation", "#Fun", "#Summer", "#Relax"]
     },
     {
       "TripId": 3,

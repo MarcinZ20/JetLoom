@@ -23,14 +23,11 @@ export class TripsService {
   private filterCriteria = new BehaviorSubject<any>({});
   private sortCriteria = new BehaviorSubject<string>('');
 
-  constructor(
-    private http: HttpClient, 
-    private reviewService: ReviewService) {
+  constructor(private http: HttpClient, private reviewService: ReviewService) {
     this.fetchTrips().subscribe();
     this.reviewService.data$.subscribe((data) => {
       console.log('Review service data: ' + data);
-    }
-    );
+    });
   }
 
   public fetchTrips(path: string = this.apiUrl): Observable<Trips> {
@@ -139,13 +136,11 @@ export class TripsService {
     );
   }
 
-  public filterTripsByPrice(
-    trips: Trip[],
-    priceFrom: number,
-    priceTo: number
-  ): Trip[] {
+  // ----------------- PIPES -----------------
+
+  public filterTripsByPrice(trips: Trip[], data: number[]): Trip[] {
     console.log('Filtering trips by price');
-    return new FilterTripsByPricePipe().transform(trips, [priceFrom, priceTo]);
+    return new FilterTripsByPricePipe().transform(trips, data);
   }
 
   public filterTripsByTag(trips: Trip[], tags: string[]): Trip[] {
@@ -162,6 +157,8 @@ export class TripsService {
     console.log('Sorting trips');
     return new SortTripsPipe(this.reviewService).transform(trips, sortType);
   }
+
+  // ----------------- UTILS -----------------
 
   getMostExpensiveTrip(trips: Trip[]): Trip {
     return trips.reduce((prev, current) =>

@@ -1,140 +1,203 @@
 <section class="hero block">
-    <div class="hero-body">
-        <div class="container has-text-centered">
-            <h1 class="title is-size-1 has-text-weight-bold has-text-black-ter">
-            JETLOOM
-            </h1>
-            <p class="subtitle">
-            Travelling made easy
-            </p>
-        </div>
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-size-1 has-text-weight-bold has-text-black-ter">
+        JETLOOM
+      </h1>
+      <p class="subtitle">Travelling made easy</p>
     </div>
+  </div>
 </section>
 
 <!-- FILTERS -->
 
 <section class="container block">
-    <nav class="level">
-        <div class="level-item has-text-centered">
-          <div>
-            <a class="subtitle is-6 has-text-success is-hoverable">
-                <fa-icon [icon]="faHome"></fa-icon>
-                Search all
-            </a>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <a class="subtitle is-6">
-                <fa-icon [icon]="faPlaneDeparture"></fa-icon>
-                Destinations
-            </a>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <a class="subtitle is-6">
-                <fa-icon [icon]="faMapPin"></fa-icon>
-                Countries
-            </a>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div class="is-hoverable">
-            <a class="subtitle is-6">
-                <fa-icon [icon]="faMoneyBill"></fa-icon>
-                Price
-            </a>
-          </div>
-        </div>
-      </nav>
+  <nav class="level">
+    <div class="level-item has-text-centered">
+      <div>
+        <a class="subtitle is-6 has-text-success is-hoverable">
+          <fa-icon [icon]="faHome"></fa-icon>
+          Search all
+        </a>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <a class="subtitle is-6">
+          <fa-icon [icon]="faPlaneDeparture"></fa-icon>
+          Destinations
+        </a>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <a class="subtitle is-6">
+          <fa-icon [icon]="faMapPin"></fa-icon>
+          Countries
+        </a>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div class="is-hoverable">
+        <a class="subtitle is-6">
+          <fa-icon [icon]="faMoneyBill"></fa-icon>
+          Price
+        </a>
+      </div>
+    </div>
+  </nav>
 </section>
 
 <!-- FORM -->
 
 <section class="container block">
-    <div class="field is-grouped">
-        <p class="control is-expanded has-icons-left">
-            <input class="input is-rounded" type="text" placeholder="Find your dream trip ...">
-            <span class="icon is-small is-left">
-                <fa-icon [icon]="faEarthAmericas"></fa-icon>
-              </span>
-        </p>
-        <p class="control">
-          <a class="button is-primary is-rounded">
-            Search
-          </a>
-        </p>
-      </div>
+  <div class="field is-grouped">
+    <p class="control is-expanded has-icons-left">
+      <input
+        class="input is-rounded"
+        type="text"
+        placeholder="Find your dream trip ..."
+      />
+      <span class="icon is-small is-left">
+        <fa-icon [icon]="faEarthAmericas"></fa-icon>
+      </span>
+    </p>
+    <p class="control">
+      <a class="button is-primary is-rounded"> Search </a>
+    </p>
+  </div>
 </section>
 
 <!-- CARDS -->
 
 <div class="container block box mb-6">
-    <div class="block has-text-centered">
-        <!-- <p class="title is-3 has-text-grey-dark">LAST MINUTE DEALS</p> -->
+  <div class="block has-text-centered">
+    <!-- <p class="title is-3 has-text-grey-dark">LAST MINUTE DEALS</p> -->
+  </div>
+  <div class="columns">
+    <div *ngFor="let trip of trips" class="column">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="../../assets/images/beach.jpg" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="card-content">
+          <p
+            class="title is-5 is-clickable"
+            [routerLink]="['/trip', trip.TripId]"
+          >
+            {{ trip.TripName }}
+          </p>
+          <p class="subtitle is-6 has-text-grey">
+            {{ trip.Country }}, {{ trip.City }}
+          </p>
+          <p class="title mt-3">
+            {{ trip.Price | currency : selectedCurrency : "symbol" : "1.2-2" }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a
+            class="card-footer-item"
+            (click)="addToBasket(trip)"
+            [class.disabled-link]="
+              checkTripAvailability(trip) === trip.MaxCapacity
+            "
+          >
+            <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
+            Book now
+          </a>
+          <a
+            class="card-footer-item"
+            (click)="removeFromBasket(trip)"
+            [class.disabled-link]="!checkTripAvailability(trip)"
+          >
+            <fa-icon class="mr-2" [icon]="faMinus"></fa-icon>
+            Remove
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Map -->
+
+<div class="section">
+  <div class="container">
+    <p class="title is-3">Where are we?</p>
     <div class="columns">
-        <div class="column">
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="../../assets/images/beach.jpg" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <p class="title">2099zł</p>
-                    <p class="subtitle is-6 has-text-grey">Hawaii</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="card-footer-item">
-                        <fa-icon class="mr-2" [icon]="faPlus"></fa-icon>
-                        Book now
-                    </a>
-                    <a href="#" class="card-footer-item">
-                        <fa-icon class="mr-2" [icon]="faMinus"></fa-icon>
-                        Book now
-                    </a>
-                </div>
-            </div>
+      <div class="column">
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe
+              width="100%"
+              height="500"
+              id="gmap_canvas"
+              src="https://maps.google.com/maps?q=Amsterdam&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+            ></iframe>
+            <a
+              href="https://www.embedgooglemap.net/blog/divi-discount-code-elegant-themes-coupon/"
+              >elegant themes coupon</a
+            >
+          </div>
+          <style>
+            .mapouter {
+              position: relative;
+              text-align: right;
+              height: 500px;
+              width: 100%;
+            }
+
+            .gmap_canvas {
+              overflow: hidden;
+              background: none !important;
+              height: 500px;
+              width: 100%;
+            }
+          </style>
         </div>
-        <div class="column">
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="../../assets/images/island.jpg" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <p class="title">2099zł</p>
-                    <p class="subtitle is-6 has-text-grey">Rodos</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="card-footer-item">
-                        <fa-icon class="mr-2" [icon]="faShoppingCart"></fa-icon>
-                        Book now
-                    </a>
-                </div>
-            </div>
+      </div>
+      <div class="column has-text-centered is-vcentered">
+        <p class="title is-1">Find us here!</p>
+        <p class="subtitle is-3">Jetloom</p>
+        <p class="subtitle is-5">Amsterdam, Netherlands</p>
+        <hr />
+        <p class="title is-3">Check out our social media!</p>
+        <div class="columns is-centered max-w">
+          <div class="column">
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              class="button is-primary is-rounded"
+            >
+              Facebook
+            </a>
+          </div>
+          <div class="column">
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              class="button is-primary is-rounded"
+            >
+              Instagram
+            </a>
+          </div>
+          <div class="column">
+            <a
+              href="https://www.twitter.com/"
+              target="_blank"
+              class="button is-primary is-rounded"
+            >
+              Twitter
+            </a>
+          </div>
         </div>
-        <div class="column">
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="../../assets/images/china.jpg" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <p class="title">2099zł</p>
-                    <p class="subtitle is-6 has-text-grey">Bejgin</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="card-footer-item">
-                        <fa-icon class="mr-2" [icon]="faShoppingCart"></fa-icon>
-                        Book now
-                    </a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>

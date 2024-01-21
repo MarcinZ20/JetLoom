@@ -31,9 +31,8 @@ import {
   faMoneyBillWave,
   faArrowUpWideShort,
   faMoneyBillAlt,
-  faTrash
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-trips',
@@ -175,53 +174,8 @@ export class TripsComponent implements OnInit, OnDestroy {
     return this.service.getLeastExpensiveTrip(this.trips).TripId;
   }
 
-  addTagToFilters(event: Event) {
-    let checkbox = event.target as HTMLInputElement;
-    let label = checkbox.parentElement;
-
-    if (!checkbox || !label) return;
-
-    let tag = '#' + label.innerText.trim();
-
-    // Check if checkbox is checked
-    if (checkbox.checked) {
-      this.selectedTags = [...this.selectedTags, tag];
-      console.log('Added tag to filters: ', tag);
-      return;
-    }
-
-    // If checkbox is not checked
-    if (!checkbox.checked) {
-      this.selectedTags = this.selectedTags.filter(
-        (selectedTag) => selectedTag !== tag
-      );
-    }
-    console.log('Removed tag from filters: ', label.innerText.trim());
-  }
-
-  filterTripsByTopBar() {
-    let filterData = this.topFilterForm.value;
-
-    const destination = filterData.DestinationFilter || null;
-    const startDate = filterData.StartDateFilter || null;
-    const endDate = filterData.EndDateFilter || null;
-
-    this.selectedTopBarFilter = [destination, startDate, endDate];
-    this.topFilterForm.reset();
-  }
-
-  filterTripsByPrice() {
-    console.log('Filtering trips by price')
-    let filterData = this.sideFilterForm.value;
-
-    const price_from = filterData.PriceFrom || null;
-    const price_to = filterData.PriceTo || null;
-
-    this.selectedSideBarFilter = [price_from, price_to, this.exchangeRate];
-    this.sideFilterForm.reset();
-  }
-
   // Exchange rates
+
   updateExchangeRate() {
     this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
       this.exchangeRate = data.rates[this.selectedCurrency];
@@ -248,7 +202,7 @@ export class TripsComponent implements OnInit, OnDestroy {
   }
 
   goToPage(pageNumber: number): void {
-    console.log('Go to page: ', pageNumber)
+    console.log('Go to page: ', pageNumber);
     this.currentPage = pageNumber;
   }
 
@@ -275,5 +229,91 @@ export class TripsComponent implements OnInit, OnDestroy {
 
   removeTrip(trip: Trip) {
     this.service.removeTrip(trip);
+  }
+
+  // Filters
+
+  filterTripsByTopBar() {
+    let filterData = this.topFilterForm.value;
+
+    const destination = filterData.DestinationFilter || null;
+    const startDate = filterData.StartDateFilter || null;
+    const endDate = filterData.EndDateFilter || null;
+
+    let trips: Trip[] = [];
+
+    this.service.getTrips().subscribe((data) => {
+      trips = data;
+    });
+
+    this.selectedTopBarFilter = [destination, startDate, endDate];
+
+    this.trips = this.service.filterTripsByTopBar(
+      trips,
+      this.selectedTopBarFilter
+    );
+
+    this.topFilterForm.reset();
+  }
+
+  filterTripsByPrice() {
+    console.log('Filtering trips by price');
+    let filterData = this.sideFilterForm.value;
+
+    const price_from = filterData.PriceFrom || null;
+    const price_to = filterData.PriceTo || null;
+
+    this.selectedSideBarFilter = [price_from, price_to, this.exchangeRate];
+
+    this.trips = this.service.filterTripsByPrice(
+      this.trips,
+      this.selectedSideBarFilter
+    );
+
+    this.sideFilterForm.reset();
+  }
+
+  sortTrips() {
+    this.trips = this.service.sortTrips(this.trips, this.selectedOption);
+  }
+
+  addTagToFilters(event: Event) {
+    let checkbox = event.target as HTMLInputElement;
+    let label = checkbox.parentElement;
+
+    if (!checkbox || !label) return;
+
+    let tag = '#' + label.innerText.trim();
+
+    // Check if checkbox is checked
+    if (checkbox.checked) {
+      this.selectedTags = [...this.selectedTags, tag];
+      this.filterTripsByTag(true);
+      console.log('Added tag to filters: ', tag);
+    }
+
+    // If checkbox is not checked
+    if (!checkbox.checked) {
+      this.selectedTags = this.selectedTags.filter(
+        (selectedTag) => selectedTag !== tag
+      );
+      console.log('Removed tag from filters: ', label.innerText.trim());
+      this.filterTripsByTag(false);
+    }
+  }
+
+  filterTripsByTag(add: boolean = true) {
+    if (add) {
+      this.trips = this.service.filterTripsByTag(this.trips, this.selectedTags);
+      return;
+    }
+
+    let trips: Trip[] = [];
+
+    this.service.getTrips().subscribe((data) => {
+      trips = data;
+    });
+
+    this.trips = this.service.filterTripsByTag(trips, this.selectedTags);
   }
 }

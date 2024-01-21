@@ -66,8 +66,7 @@
     <div class="container columns">
       <div class="column is-one-fifth">
         <div class="select is-rounded">
-          <select 
-            [(ngModel)]="selectedOption">
+          <select [(ngModel)]="selectedOption" (ngModelChange)="sortTrips()">
             <option value="lowestPrice">Price: from lowest</option>
             <option value="highestPrice">Price: from highest</option>
             <option value="az">From A to Z</option>
@@ -152,11 +151,12 @@
           <label class="label">Currency</label>
           <div class="control has-icons-left">
             <div class="select is-rounded">
-              <select 
-                [(ngModel)]="selectedCurrency" 
-                (ngModelChange)="updateExchangeRate()">
+              <select
+                [(ngModel)]="selectedCurrency"
+                (ngModelChange)="updateExchangeRate()"
+              >
                 <option>EUR</option>
-                <option>GBP </option>
+                <option>GBP</option>
                 <option>USD</option>
                 <option>JPY</option>
               </select>
@@ -167,9 +167,7 @@
           </div>
         </div>
         <hr />
-        <form 
-        [formGroup]="sideFilterForm" 
-        (ngSubmit)="filterTripsByPrice()">
+        <form [formGroup]="sideFilterForm" (ngSubmit)="filterTripsByPrice()">
           <div class="field">
             <label class="label">Price from:</label>
             <div class="control has-icons-left">
@@ -200,9 +198,7 @@
           </div>
           <hr />
           <div class="control">
-            <button 
-            type="submit"
-            class="button is-primary is-fullwidth">
+            <button type="submit" class="button is-primary is-fullwidth">
               Filter
             </button>
           </div>
@@ -216,22 +212,17 @@
 
     <div class="column">
       <div
-        *ngFor="
-          let trip of trips
-            | filterTripsByTopBar : selectedTopBarFilter
-            | filterTripsByTag : selectedTags
-            | filterTripsByPrice : selectedSideBarFilter
-            | sortTrips : selectedOption
-        "
+        *ngFor="let trip of trips | paginate:currentPage:tripsPerPage"
         class="container block box"
-        [class.has-background-warning-light]="calculateTripAvailability(trip) <= 5"
+        [class.has-background-warning-light]="
+          calculateTripAvailability(trip) <= 5
+        "
         [class.has-background-grey-dark]="calculateTripAvailability(trip) === 0"
         [class.most-expensive]="trip.TripId === getHighestPriceTripId()"
         [class.least-expensive]="trip.TripId === getLowestPriceTrip()"
         id="trip"
       >
-        <div 
-          class="container">
+        <div class="container">
           <div class="columns">
             <div class="column is-one-quarter">
               <figure class="image is-square">
@@ -243,9 +234,10 @@
               </figure>
             </div>
             <div class="column is-three-fifths">
-              <p 
+              <p
                 class="title is-3 is-clickable"
-                [routerLink]="['/trip', trip.TripId]">
+                [routerLink]="['/trip', trip.TripId]"
+              >
                 {{ trip.TripName }}
               </p>
               <p class="subtitle is-5 has-text-grey">
@@ -269,7 +261,12 @@
                   <div class="column is-half">
                     <p class="title is-3">
                       Price:
-                      <span class="has-text-primary"> {{ convertPriceToSelectedCurrency(trip.Price) | currency:selectedCurrency:'symbol':'1.2-2' }}</span>
+                      <span class="has-text-primary">
+                        {{
+                          convertPriceToSelectedCurrency(trip.Price)
+                            | currency : selectedCurrency : "symbol" : "1.2-2"
+                        }}</span
+                      >
                     </p>
                   </div>
                   <div class="column">
@@ -289,7 +286,9 @@
                         class="button is-danger is-light"
                         id="remove-button"
                         (click)="removeFromCart(trip)"
-                        [disabled]="calculateTripAvailability(trip) === trip.MaxCapacity"
+                        [disabled]="
+                          calculateTripAvailability(trip) === trip.MaxCapacity
+                        "
                       >
                         <span class="icon">
                           <fa-icon [icon]="faMinus"></fa-icon>
@@ -318,25 +317,19 @@
         </div>
       </div>
       <div class="container block mb-5">
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-          <a 
-            class="pagination-previous"
-            (click)="previousPage()">
-            Previous
-          </a>
-          <a 
-            class="pagination-next"
-            (click)="nextPage()">
-            Next page
-          </a>
+        <nav
+          class="pagination is-centered"
+          role="navigation"
+          aria-label="pagination"
+        >
+          <a class="pagination-previous" (click)="previousPage()"> Previous </a>
+          <a class="pagination-next" (click)="nextPage()"> Next page </a>
           <ul class="pagination-list">
-            <li 
-              *ngFor="let page of getPages()" 
-              [class.is-current]="currentPage === page">
-              <a 
-                class="pagination-link" 
-                (click)="goToPage(page)"
-                >{{ page }}</a>
+            <li
+              *ngFor="let page of getPages()"
+              [class.is-current]="currentPage === page"
+            >
+              <a class="pagination-link" (click)="goToPage(page)">{{ page }}</a>
             </li>
           </ul>
         </nav>
