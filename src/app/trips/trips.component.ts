@@ -98,8 +98,7 @@ export class TripsComponent implements OnInit, OnDestroy {
     private service: TripsService,
     private basketService: BasketService,
     private currencyService: CurrencyExchangeRatesService,
-    private reviewService: ReviewService,
-    private notificationService: NotificationService
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit() {
@@ -134,8 +133,9 @@ export class TripsComponent implements OnInit, OnDestroy {
       PriceTo: new FormControl(''),
     });
 
-    this.notificationService.notification$.subscribe((notification) => {
-      console.log('Notification: ' + notification);
+    // Get reviews
+    this.trips.forEach((trip) => {
+      trip.Reviews = this.getReviews(trip);
     });
   }
 
@@ -227,7 +227,8 @@ export class TripsComponent implements OnInit, OnDestroy {
 
   // Reviews
   getReviews(trip: Trip) {
-    return this.reviewService.getReviews(trip);
+    console.log('Getting reviews for trip: ' + trip.TripName);
+    return this.reviewService.getReviews(trip.TripId);
   }
 
   getAverageRating(trip: Trip) {

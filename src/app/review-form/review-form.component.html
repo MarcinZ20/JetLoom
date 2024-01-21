@@ -1,49 +1,58 @@
 <section class="section block">
-    <div class="container is-max-desktop">
-        <p class="title is-3">Add Review</p>
-        <hr />
-        <form class="columns">
-            <div class="column">
-                <div class="columns">
-                    <div class="column">
-                        <div class="field">
-                        <label class="label">Name</label>
-                            <div class="control">
-                                <input class="input" type="text" [(ngModel)]="name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="field">
-                            <label class="label">Rating</label>
-                            <div class="control is-expanded">
-                                <div class="select">
-                                    <select [(ngModel)]="rating">
-                                        <option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Title</label>
-                    <div class="control">
-                        <input class="input" type="text" [(ngModel)]="title">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Comment</label>
-                    <div class="control">
-                        <textarea class="textarea" [(ngModel)]="comment"></textarea>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-primary" (click)="addReview()">Submit</button>
-                    </div>
-                </div>
+  <div class="container is-max-desktop">
+    <p class="title is-3">Add Review</p>
+    <hr />
+    <form [formGroup]="reviewForm" (ngSubmit)="addReview()" class="columns">
+      <div class="column">
+        <div class="columns">
+          <div class="column">
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  formControlName="ReviewerName"
+                />
+              </div>
             </div>
-        </form>
-    </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Rating</label>
+              <div class="control is-expanded">
+                <div class="select">
+                  <select formControlName="ReviewRating">
+                    <option
+                      *ngFor="let rating of [1, 2, 3, 4, 5]"
+                      [value]="rating"
+                    >
+                      {{ rating }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Title</label>
+          <div class="control">
+            <input class="input" type="text" formControlName="ReviewTitle" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Comment</label>
+          <div class="control">
+            <textarea class="textarea" formControlName="ReviewText"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button type="submit" class="button is-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>

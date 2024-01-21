@@ -1,20 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Review } from '../review';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './review.component.html',
-  styleUrl: './review.component.css'
+  styleUrl: './review.component.css',
 })
-export class ReviewComponent implements OnInit{
+export class ReviewComponent implements OnInit {
   @Input() review: Review;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-    
-  }
-
+  ngOnInit(): void {}
 }

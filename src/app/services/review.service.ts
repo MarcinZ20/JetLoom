@@ -5,23 +5,21 @@ import { Trip } from '../trip';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ReviewService  implements OnInit{
-
+export class ReviewService implements OnInit {
   private reviewsSubject = new BehaviorSubject<Review[]>([]);
   public data$: Observable<Review[]> = this.reviewsSubject.asObservable();
 
+  constructor() {}
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   addReview(review: Review) {
-    console.log('Adding review: ' + review);
+    console.log('Name' + review.ReviewerName);
+    console.log('Review' + review.ReviewText);
+    console.log('Rating' + review.Rating);
+
     const currentReviews = this.reviewsSubject.getValue();
     this.reviewsSubject.next([...currentReviews, review]);
   }
@@ -46,8 +44,17 @@ export class ReviewService  implements OnInit{
     this.reviewsSubject.next(currentReviews);
   }
 
-  getReviews(trip: Trip) {
-    return trip.Reviews;
+  getReviews(tripId: number): Review[] {
+    let reviews = this.reviewsSubject.getValue();
+    let tripReviews = [];
+
+    for (let review of reviews) {
+      if (review.TripId == tripId) {
+        tripReviews.push(review);
+      }
+    }
+
+    return tripReviews;
   }
 
   getAverageRating(trip: Trip) {

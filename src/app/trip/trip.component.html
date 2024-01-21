@@ -1,8 +1,14 @@
-<section class="hero block is-halfheight frame">
+<section
+  class="hero block is-halfheight frame"
+  [ngStyle]="{
+    'background-image':
+      'linear-gradient(to right, #4545455c, #f5f5f598), url(' + trip.Image + ')'
+  }"
+>
   <div class="hero-body">
     <div class="">
       <p class="title is-1 has-text-white">{{ trip.TripName }}</p>
-      <p class="subtitle has-text-white">{{ trip.City }}, {{ trip.Country}}</p>
+      <p class="subtitle has-text-white">{{ trip.City }}, {{ trip.Country }}</p>
     </div>
   </div>
 </section>
@@ -23,7 +29,7 @@
         <p class="title is-3 m">Trip Cart</p>
         <hr />
         <p class="subtitle is-5 mb-1">Destination</p>
-        <p class="block">{{ trip.City }}, {{ trip.Country}}</p>
+        <p class="block">{{ trip.City }}, {{ trip.Country }}</p>
         <p class="subtitle is-5 mb-1">Date</p>
         <p class="block">
           <span class="mr-1">{{ trip.StartDate }}</span>
@@ -33,34 +39,36 @@
           <span class="ml-1">{{ trip.EndDate }}</span>
         </p>
         <p class="subtitle is-5 mb-1">Tags</p>
-        <div 
-          class="container block">
-          <p 
-            *ngFor="let tag of trip.Tags"
-            class="tag is-medium mr-1 mb-1">{{ tag }}</p>
+        <div class="container block">
+          <p *ngFor="let tag of trip.Tags" class="tag is-medium mr-1 mb-1">
+            {{ tag }}
+          </p>
         </div>
         <hr />
-        <p class="title is-3 block">Price: 
+        <p class="title is-3 block">
+          Price:
           <span>
-            {{ trip.Price | currency:currency:'symbol':'1.2-2' }}
+            {{ trip.Price | currency : currency : "symbol" : "1.2-2" }}
           </span>
         </p>
         <div class="buttons">
-          <button 
-            class="button is-primary" 
+          <button
+            class="button is-primary"
             id="buy-button"
             (click)="addToCart()"
-            [disabled]="!getTripAvailability()">
+            [disabled]="!getTripAvailability()"
+          >
             <span class="icon">
               <fa-icon [icon]="faPlus"></fa-icon>
             </span>
             <span>Buy</span>
           </button>
-          <button 
-            class="button is-danger is-light" 
+          <button
+            class="button is-danger is-light"
             id="remove-button"
             (click)="removeFromCart()"
-            [disabled]="getTripAvailability() === trip.MaxCapacity">
+            [disabled]="getTripAvailability() === trip.MaxCapacity"
+          >
             <span class="icon">
               <fa-icon [icon]="faMinus"></fa-icon>
             </span>
@@ -75,6 +83,10 @@
   <div class="container">
     <p class="title is-3">Reviews</p>
     <hr />
+    <div class="container" *ngIf="trip.Reviews.length === 0">
+      <p class="title is-4">No reviews yet ...</p>
+      <p class="subtitle">Care to write one?</p>
+    </div>
     <div *ngFor="let review of trip.Reviews">
       <app-review [review]="review"></app-review>
     </div>
@@ -82,8 +94,9 @@
 </section>
 <section>
   <div class="container">
-    <p class="title is-3">Add Review</p>
-    <hr />
-    <app-review-form [tripId]="trip.TripId"></app-review-form>
+    <app-review-form
+      [tripId]="trip.TripId"
+      (reviewAdded)="refreshReviews()"
+    ></app-review-form>
   </div>
 </section>

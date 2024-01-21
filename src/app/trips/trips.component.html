@@ -200,12 +200,17 @@
           <div class="columns">
             <div class="column">
               <div class="control">
-                <button type="submit" class="button is-primary is-fullwidth">Filter</button>
+                <button type="submit" class="button is-primary is-fullwidth">
+                  Filter
+                </button>
               </div>
             </div>
             <div class="column">
               <div class="control">
-                <button class="button is-danger is-fullwidth" (click)="resetFilters()">
+                <button
+                  class="button is-danger is-fullwidth"
+                  (click)="resetFilters()"
+                >
                   Reset
                 </button>
               </div>
@@ -237,7 +242,7 @@
               <figure class="image is-square">
                 <img
                   class="is-rounded"
-                  src="../../assets/images/island.jpg"
+                  src="{{ trip.Image }}"
                   alt="Placeholder image"
                 />
               </figure>

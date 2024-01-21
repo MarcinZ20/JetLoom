@@ -6,13 +6,18 @@
   <section class="section columns">
     <div class="column">
       <div class="container">
-        <div 
-          class="item box is-clickable" 
+        <div
+          class="item box is-clickable"
           *ngFor="let trip of basket.keys()"
-          [routerLink]="['/trip/' + trip.TripId]">
+          [routerLink]="['/trip/' + trip.TripId]"
+        >
           <div class="columns">
             <div class="column is-one-fifth">
-              <figure class="image is-128x128" id="image"></figure>
+              <figure
+                class="image is-128x128"
+                id="image"
+                [ngStyle]="{ 'background-image': 'url(' + trip.Image + ')' }"
+              ></figure>
             </div>
             <div class="column is-two-fifths" id="item">
               <p class="title is-5">{{ trip.TripName }}</p>
@@ -44,9 +49,13 @@
               </div>
               <br />
               <p
-                *ngIf="basket.get(trip)" 
-                class="title is-5 is-pulled-right mt-6">
-                {{ (trip.Price || 0) * (basket.get(trip) || 0) | currency:currency:'symbol':'1.2-2' }}
+                *ngIf="basket.get(trip)"
+                class="title is-5 is-pulled-right mt-6"
+              >
+                {{
+                  (trip.Price || 0) * (basket.get(trip) || 0)
+                    | currency : currency : "symbol" : "1.2-2"
+                }}
               </p>
             </div>
           </div>
@@ -60,19 +69,21 @@
           <p *ngIf="basket.size !== 0" class="subtitle is-5">
             Wanna buy more?
             <a class="is-link is-underlined" [routerLink]="['/trips']"
-            >Go back to shopping</a
+              >Go back to shopping</a
             >
-        </p>
-        <p *ngIf="basket.size === 0" class="subtitle is-5">
+          </p>
+          <p *ngIf="basket.size === 0" class="subtitle is-5">
             <a class="is-link is-underlined" [routerLink]="['/trips']"
-            >Go back to shopping</a
+              >Go back to shopping</a
             >
-        </p>
-        <hr />
+          </p>
+          <hr />
           <p class="title is-4 mb-0">
             Total:
             <span class="subtitle is-4">
-              {{ getBasketTotalPrice() | currency:currency:'symbol':'1.2-2' }}
+              {{
+                getBasketTotalPrice() | currency : currency : "symbol" : "1.2-2"
+              }}
             </span>
           </p>
           <p class="block is-gray">

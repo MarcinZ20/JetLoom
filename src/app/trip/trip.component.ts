@@ -18,6 +18,7 @@ import { CurrencyExchangeRatesService } from '../services/currency-exchange-rate
 import { ReviewService } from '../services/review.service';
 import { ReviewComponent } from '../review/review.component';
 import { ReviewFormComponent } from '../review-form/review-form.component';
+import { Review } from '../review';
 
 @Component({
   selector: 'app-trip',
@@ -37,9 +38,8 @@ import { ReviewFormComponent } from '../review-form/review-form.component';
 })
 export class TripComponent implements OnInit {
   // Properties
-  trip: Trip;
-
-  private _quantity: number = 0;
+  public trip: Trip;
+  public reviews: Review[] = [];
   public currency: string;
 
   // Icons
@@ -53,7 +53,8 @@ export class TripComponent implements OnInit {
     private router: ActivatedRoute,
     private tripService: TripsService,
     private basketService: BasketService,
-    private currencyExchangeRatesService: CurrencyExchangeRatesService
+    private currencyExchangeRatesService: CurrencyExchangeRatesService,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class TripComponent implements OnInit {
     if (tripId) {
       this.tripService.getTrip(tripId).subscribe((trip) => {
         this.trip = trip;
-        this.initMap()
+        this.initMap();
         console.log('Trip avalibility' + this.getTripAvailability());
       });
     }
@@ -70,11 +71,13 @@ export class TripComponent implements OnInit {
     this.currencyExchangeRatesService.getCurrency().subscribe((currency) => {
       this.currency = currency;
     });
+
+    this.trip.Reviews = this.reviewService.getReviews(this.trip.TripId);
   }
 
   initMap() {
     const address = this.trip.City + ', ' + this.trip.Country;
-    console.log(address)
+    console.log(address);
 
     const geocoder = new google.maps.Geocoder();
 
@@ -114,6 +117,12 @@ export class TripComponent implements OnInit {
   }
 
   getTripAvailability() {
-    return this.trip.MaxCapacity - this.basketService.getTripQuantity(this.trip);
+    return (
+      this.trip.MaxCapacity - this.basketService.getTripQuantity(this.trip)
+    );
+  }
+
+  refreshReviews() {
+    this.trip.Reviews = this.reviewService.getReviews(this.trip.TripId);
   }
 }
