@@ -10,21 +10,42 @@ import { CurrencyExchangeRatesService } from './services/currency-exchange-rates
 import { BasketService } from './services/basket.service';
 import { ReviewService } from './services/review.service';
 import { NotificationService } from './services/notification.service';
+import { AddedTripNotificationComponent } from './added-trip-notification/added-trip-notification.component';
+import { NgIf } from '@angular/common';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     HttpClientModule,
-    RouterOutlet, 
-    NavbarComponent, 
-    FooterComponent, 
-    BtnToTopComponent],
+    RouterOutlet,
+    NavbarComponent,
+    FooterComponent,
+    BtnToTopComponent,
+    AddedTripNotificationComponent,
+    NgIf,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [TripsService, CurrencyExchangeRatesService, BasketService, ReviewService, NotificationService]
+  providers: [
+    TripsService,
+    CurrencyExchangeRatesService,
+    BasketService,
+    ReviewService,
+    NotificationService,
+  ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'JetLoom';
+  public showNotification: boolean;
+
+  constructor(private basketService: BasketService) {}
+
+  ngOnInit(): void {
+    this.basketService.showNotification.asObservable().subscribe((data) => {
+      this.showNotification = data;
+    });
+  }
 }

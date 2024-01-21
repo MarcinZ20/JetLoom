@@ -77,6 +77,9 @@ export class TripsComponent implements OnInit, OnDestroy {
   private countSubscription: Subscription;
   public pagesCount: number;
 
+  // Notification
+  public showNotification = false;
+
   // Icons
   faPlus = faPlus;
   faMinus = faMinus;
@@ -154,6 +157,10 @@ export class TripsComponent implements OnInit, OnDestroy {
 
   addToCart(trip: Trip) {
     this.basketService.addToBasket(trip);
+    this.showNotification = true;
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
   }
 
   removeFromCart(trip: Trip) {
@@ -315,5 +322,16 @@ export class TripsComponent implements OnInit, OnDestroy {
     });
 
     this.trips = this.service.filterTripsByTag(trips, this.selectedTags);
+  }
+
+  resetFilters() {
+    this.selectedTags = [];
+    this.selectedTopBarFilter = [];
+    this.selectedSideBarFilter = [];
+    this.selectedOption = 'lowestPrice';
+    this.trips = [];
+    this.service.getTrips().subscribe((data) => {
+      this.trips = data;
+    });
   }
 }

@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Trip } from '../trip';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BasketService {
-
   private basket = new Map<Trip, number>();
   private basketSize = new BehaviorSubject<number>(0);
+  public showNotification = new BehaviorSubject<boolean>(false);
 
   setItemCount(count: number): void {
     this.basketSize.next(count);
@@ -47,7 +46,7 @@ export class BasketService {
       size += quantity;
     });
     this.basketSize.next(size);
-    this.setItemCount(this.basket.size)
+    this.setItemCount(this.basket.size);
   }
 
   addToBasket(trip: Trip): void {
@@ -60,15 +59,19 @@ export class BasketService {
     }
 
     this.updateBasketSize();
+    this.showNotification.next(true);
+    setTimeout(() => {
+      this.showNotification.next(false);
+    }, 3000);
   }
 
   addToBasketUsingId(id: number): void {
-    console.log('Inside basket service')
+    console.log('Inside basket service');
     this.basket.forEach((quantity, trip) => {
-      console.log(trip)
+      console.log(trip);
       if (trip.TripId === id) {
         console.log('Found trip with id: ' + id);
-        console.log('Adding trip to basket: ' + trip)
+        console.log('Adding trip to basket: ' + trip);
         this.addToBasket(trip);
         return;
       }
@@ -83,7 +86,7 @@ export class BasketService {
       this.deleteFromBasket(trip);
       return;
     }
-    
+
     if (quantity) {
       this.basket.set(trip, quantity - 1);
       this.updateBasketSize();

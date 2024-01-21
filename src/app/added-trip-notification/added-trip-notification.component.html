@@ -1,5 +1,5 @@
 <div class="notification is-success is-light" id="notification">
-  <button class="delete"></button>
+  <button class="delete" (click)="closeNotification()"></button>
     <p><strong>Success!</strong></p>
     <p class="mb-3">Your trip has been added.</p>
     <a [routerLink]="['/basket']">Go to basket</a>

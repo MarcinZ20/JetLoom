@@ -197,10 +197,19 @@
             </div>
           </div>
           <hr />
-          <div class="control">
-            <button type="submit" class="button is-primary is-fullwidth">
-              Filter
-            </button>
+          <div class="columns">
+            <div class="column">
+              <div class="control">
+                <button type="submit" class="button is-primary is-fullwidth">Filter</button>
+              </div>
+            </div>
+            <div class="column">
+              <div class="control">
+                <button class="button is-danger is-fullwidth" (click)="resetFilters()">
+                  Reset
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -212,7 +221,7 @@
 
     <div class="column">
       <div
-        *ngFor="let trip of trips | paginate:currentPage:tripsPerPage"
+        *ngFor="let trip of trips | paginate : currentPage : tripsPerPage"
         class="container block box"
         [class.has-background-warning-light]="
           calculateTripAvailability(trip) <= 5

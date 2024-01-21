@@ -1,24 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Trip } from '../trip';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BasketService } from '../services/basket.service';
 
 @Component({
   selector: 'app-added-trip-notification',
   standalone: true,
   imports: [RouterModule],
   templateUrl: './added-trip-notification.component.html',
-  styleUrl: './added-trip-notification.component.css'
+  styleUrl: './added-trip-notification.component.css',
 })
 export class AddedTripNotificationComponent implements OnInit {
-  constructor() {}
+  constructor(private basketService: BasketService) {}
 
-  @Input() public trip: Trip;
-  public showNotification = false;
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.showNotification = true;
-    setTimeout(() => {
-      this.showNotification = false;
-    } , 3000);
+  closeNotification(): void {
+    this.basketService.showNotification.next(false);
   }
 }

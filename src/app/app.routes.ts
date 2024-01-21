@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AddTripComponent } from './add-trip/add-trip.component';
 import { BasketComponent } from './basket/basket.component';
+import { AboutPageComponent } from './about-page/about-page.component';
 
 
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'trips', component: TripsComponent },
     { path: 'trip', component: TripComponent },
     { path: 'trip/:id', component: TripComponent },
+    { path: 'about', component: AboutPageComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
