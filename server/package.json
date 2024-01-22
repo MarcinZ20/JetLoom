@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@angular/fire": "^17.0.1",
     "express": "^4.18.2",
+    "firebase": "^10.7.2",
     "mongoose": "^8.1.0"
   },
   "devDependencies": {

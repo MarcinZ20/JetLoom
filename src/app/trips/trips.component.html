@@ -236,6 +236,10 @@
         [class.least-expensive]="trip.TripId === getLowestPriceTrip()"
         id="trip"
       >
+        <div class="container" *ngIf="trips.length === 0">
+          <p class="title is-2">Ooops ...</p>
+          <p class="subtitle is-4">No trips found this time</p>
+        </div>
         <div class="container">
           <div class="columns">
             <div class="column is-one-quarter">

@@ -44,6 +44,8 @@ export class AppComponent implements OnInit {
   constructor(private basketService: BasketService) {}
 
   ngOnInit(): void {
+    // const app = initializeApp(firebaseConfig);
+
     this.basketService.showNotification.asObservable().subscribe((data) => {
       this.showNotification = data;
     });

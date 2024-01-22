@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +14,6 @@ import { FilterTripsByPricePipe } from '../pipes/filter-trips-by-price.pipe';
 import { TripsService } from '../services/trips.service';
 import { BasketService } from '../services/basket.service';
 import { CurrencyExchangeRatesService } from '../services/currency-exchange-rates.service';
-import { NotificationService } from '../services/notification.service';
 import { ReviewService } from '../services/review.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -39,6 +38,7 @@ import {
   standalone: true,
   imports: [
     NgFor,
+    NgIf,
     HttpClientModule,
     FontAwesomeModule,
     FormsModule,
@@ -76,6 +76,8 @@ export class TripsComponent implements OnInit, OnDestroy {
   public tripsPerPage: number = 10;
   private countSubscription: Subscription;
   public pagesCount: number;
+
+  // TODO: Date Filters
 
   // Notification
   public showNotification = false;
@@ -215,7 +217,7 @@ export class TripsComponent implements OnInit, OnDestroy {
 
   getPages(): number[] {
     return Array.from(
-      Array(Math.ceil(this.pagesCount / this.tripsPerPage)).keys()
+      Array(Math.ceil(this.trips.length / this.tripsPerPage)).keys()
     ).map((i) => i + 1);
   }
 
@@ -282,7 +284,8 @@ export class TripsComponent implements OnInit, OnDestroy {
   }
 
   sortTrips() {
-    this.trips = this.service.sortTrips(this.trips, this.selectedOption);
+    let sortedTrips = this.service.sortTrips(this.trips, this.selectedOption);
+    this.trips = [...sortedTrips];
   }
 
   addTagToFilters(event: Event) {
