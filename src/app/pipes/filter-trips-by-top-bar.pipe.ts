@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Trip } from '../trip';
+import { DatePipe } from '@angular/common';
 
 @Pipe({
   name: 'filterTripsByTopBar',
@@ -7,37 +8,37 @@ import { Trip } from '../trip';
 })
 export class FilterTripsByTopBarPipe implements PipeTransform {
   transform(trips: Trip[], data: string[]): Trip[] {
-
     if (!trips) return [];
     if (!data || data.length === 0) return trips;
 
-    let destination = data[0].toLowerCase().trim();
+    const destination = data[0] ? data[0].toLowerCase().trim() : null;
     const startDate = data[1] ? new Date(data[1]) : null;
     const endDate = data[2] ? new Date(data[2]) : null;
 
     if (destination) {
+      console.log('Destination: ' + destination);
       trips = trips.filter((trip) => {
-        return trip.Country.toLowerCase().includes(destination) || trip.City.toLowerCase().includes(destination);
+        return (
+          trip.Country.toLowerCase().includes(destination) ||
+          trip.City.toLowerCase().includes(destination)
+        );
       });
     }
 
-    console.log('Trips after destination filter end');
-
     if (startDate) {
+      console.log('Start date: ' + startDate);
       trips = trips.filter((trip) => {
         return new Date(trip.StartDate) >= startDate;
       });
     }
 
-    console.log('Trips after start date filter end');
-
     if (endDate) {
       trips = trips.filter((trip) => {
+        console.log('Trip end date: ' + trip.EndDate);
+        console.log('End date: ' + endDate);
         return new Date(trip.EndDate) <= endDate;
       });
     }
-
-    console.log('Trips after end date filter end');
 
     return trips;
   }

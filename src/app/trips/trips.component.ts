@@ -116,7 +116,11 @@ export class TripsComponent implements OnInit, OnDestroy {
 
     // Get currency exchange rates
     this.currencyService.getCurrencyExchangeRates().subscribe((data) => {
+      if (data && data.rates && data.rates[this.selectedCurrency] && this.selectedCurrency) {
       this.exchangeRate = data.rates[this.selectedCurrency];
+      } else {
+        console.error('Error getting currency exchange rates');
+      }
     });
 
     // Get currency
@@ -151,8 +155,11 @@ export class TripsComponent implements OnInit, OnDestroy {
     return this.service.getTripsCount();
   }
 
-  // Basket logic
+  getAllTags(): string[] {
+    return this.service.getAllTags();
+  }
 
+  // Basket logic
   calculateTripAvailability(trip: Trip) {
     return trip.MaxCapacity - this.basketService.getTripQuantity(trip);
   }
@@ -172,8 +179,6 @@ export class TripsComponent implements OnInit, OnDestroy {
   addToFavorites(trip: Trip) {
     console.log('Added to favorites: ' + trip.TripName);
   }
-
-  // Filters and sorting
 
   getHighestPriceTripId(): number {
     return this.service.getMostExpensiveTrip(this.trips).TripId;
@@ -263,7 +268,7 @@ export class TripsComponent implements OnInit, OnDestroy {
       this.selectedTopBarFilter
     );
 
-    this.topFilterForm.reset();
+    // this.topFilterForm.reset();
   }
 
   filterTripsByPrice() {

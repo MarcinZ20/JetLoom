@@ -1,81 +1,66 @@
 <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" [routerLink]="['/home']">
-        <img src="../../assets/images/logos/logo.png" width="112" height="50">
-      </a>
-  
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item" [routerLink]="['/home']">
-          Home
-        </a>
-  
-        <a class="navbar-item" [routerLink]="['/trips']">
-          Trips
-        </a>
-  
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            More
-          </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item" [routerLink]="['/about']">
-              About
-            </a>
-            <a class="navbar-item" [routerLink]="['/contact']">
-              Contact
-            </a>
-            <a class="navbar-item" [routerLink]="['/add-trip']">
-              Add trip
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item" [routerLink]="['/contact']">
-              Report an issue
-            </a>
-          </div>
+  <div class="navbar-brand">
+    <a class="navbar-item" [routerLink]="['/home']">
+      <img src="../../assets/images/logos/logo.png" width="112" height="50" />
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarBasicExample"
+      #navbarBurger
+      id="navbarBurger"
+      (click)="toggleNavbar()"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu" #navbarMenu id="navbarMenu">
+    <div class="navbar-start">
+      <a class="navbar-item" [routerLink]="['/home']"> Home </a>
+
+      <a class="navbar-item" [routerLink]="['/trips']"> Trips </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link"> More </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" [routerLink]="['/about']"> About </a>
+          <a class="navbar-item" [routerLink]="['/contact']"> Contact </a>
+          <a class="navbar-item" [routerLink]="['/add-trip']"> Add trip </a>
         </div>
       </div>
-  
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="button is-arrowless">
-                <span class="icon is-small">
-                  <fa-icon [icon]="faUser"></fa-icon>
-                </span>
-                <span>
-                  Profile
-                </span>
-              </a>
-              <div class="navbar-dropdown is-right">
-                <a class="navbar-item" [routerLink]="['/login']">
-                  Login
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item" [routerLink]="['/register']">
-                  Register
-                </a>
-              </div>
-            </div>
-            <a class="button is-outlined" [routerLink]="['/basket']">
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="button is-arrowless">
               <span class="icon is-small">
-                <fa-icon [icon]="faShoppingCart"></fa-icon>
+                <fa-icon [icon]="faUser"></fa-icon>
               </span>
-              <span>
-                Cart: {{ basketSize }}
-              </span>
+              <span> Profile </span>
             </a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" [routerLink]="['/login']"> Login </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item" [routerLink]="['/register']"> Register </a>
+            </div>
           </div>
+          <a class="button is-outlined" [routerLink]="['/basket']">
+            <span class="icon is-small">
+              <fa-icon [icon]="faShoppingCart"></fa-icon>
+            </span>
+            <span> Cart: {{ basketSize }} </span>
+          </a>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

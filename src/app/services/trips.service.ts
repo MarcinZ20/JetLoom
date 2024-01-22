@@ -106,6 +106,21 @@ export class TripsService {
     );
   }
 
+  getAllTags(): string[] {
+    let tags: string[] = [];
+    this.data$.subscribe((trips) => {
+      trips.forEach((trip) => {
+        trip.Tags.forEach((tag) => {
+          tag = tag.replace(/#/g, '');
+          if (!tags.includes(tag)) {
+            tags.push(tag);
+          }
+        });
+      });
+    });
+    return tags;
+  }
+
   getTrip(id: number): Observable<Trip> {
     console.log('Id: ' + id);
     console.log(this.data$);

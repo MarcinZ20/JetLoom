@@ -50,7 +50,7 @@
 
 <!-- FORM -->
 
-<section class="container block">
+<section class="container block mb-6">
   <div class="field is-grouped">
     <p class="control is-expanded has-icons-left">
       <input
@@ -70,16 +70,14 @@
 
 <!-- CARDS -->
 
-<div class="container block box mb-6">
-  <div class="block has-text-centered">
-    <!-- <p class="title is-3 has-text-grey-dark">LAST MINUTE DEALS</p> -->
-  </div>
+<div class="container block mb-6">
+  <div class="block has-text-centered"></div>
   <div class="columns">
     <div *ngFor="let trip of trips" class="column">
       <div class="card">
         <div class="card-image">
           <figure class="image is-4by3">
-            <img src="../../assets/images/beach.jpg" alt="Placeholder image" />
+            <img src="{{ trip.Image }}" alt="Placeholder image" />
           </figure>
         </div>
         <div class="card-content">
@@ -123,9 +121,8 @@
 
 <!-- Map -->
 
-<div class="section">
+<div class="section mt-5">
   <div class="container">
-    <p class="title is-3">Where are we?</p>
     <div class="columns">
       <div class="column">
         <div class="mapouter">

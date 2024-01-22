@@ -40,5 +40,10 @@
 }
 
 .is-current a {
-  border: solid 2px hsl(229, 53%,  53%);
+  border: solid 2px hsl(229, 53%, 53%);
+}
+
+.sticky {
+  position: sticky !important;
+  top: 0;
 }

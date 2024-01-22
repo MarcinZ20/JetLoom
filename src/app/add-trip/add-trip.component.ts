@@ -2,37 +2,50 @@ import { Component, OnInit } from '@angular/core';
 import { Trip } from '../trip';
 import { HttpClientModule } from '@angular/common/http';
 import { TripsService } from '../services/trips.service';
-import { FormControl, ReactiveFormsModule, FormGroup, Validators} from '@angular/forms';
-import { linkValidator} from '../validators/link-validation.directive';
+import {
+  FormControl,
+  ReactiveFormsModule,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { linkValidator } from '../validators/link-validation.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faLink, faLocationDot, faCalculator, faPen, faEarthAmerica} from '@fortawesome/free-solid-svg-icons';
-import { NgIf, NgFor } from '@angular/common';
-
+import {
+  faLink,
+  faLocationDot,
+  faCalculator,
+  faPen,
+  faEarthAmerica,
+} from '@fortawesome/free-solid-svg-icons';
+import { NgIf, NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-add-trip',
   standalone: true,
   imports: [
-    ReactiveFormsModule, 
-    FontAwesomeModule, 
-    HttpClientModule, 
-    NgIf, 
-    NgFor],
-    templateUrl: './add-trip.component.html',
-    styleUrl: './add-trip.component.css',
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    HttpClientModule,
+    NgIf,
+    NgFor,
+    NgStyle,
+  ],
+  templateUrl: './add-trip.component.html',
+  styleUrl: './add-trip.component.css',
 })
 export class AddTripComponent implements OnInit {
-
   TripForm: FormGroup;
-  tags: string[] = [];
+  tags: string[];
 
-  constructor(private tripsService: TripsService) { }
+  constructor(private tripsService: TripsService) {}
 
   ngOnInit(): void {
     this.TripForm = new FormGroup({
       TripName: new FormControl('', [
         Validators.required,
-        linkValidator(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/i)
+        linkValidator(
+          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/i
+        ),
       ]),
       TripCountry: new FormControl(''),
       TripCity: new FormControl(''),
@@ -43,7 +56,7 @@ export class AddTripComponent implements OnInit {
       TripPriceCurrency: new FormControl(''),
       TripCapacity: new FormControl(''),
       TripImage: new FormControl(''),
-      TripTags: new FormControl('')
+      TripTags: new FormControl(''),
     });
 
     this.tags = [];
@@ -73,9 +86,12 @@ export class AddTripComponent implements OnInit {
     }
   }
 
-  // FIXME: Add trip form does not work (When clicking to add tags, submit button is triggered)
   onSubmit() {
     const tripData = this.TripForm.value;
+
+    if (this.TripForm.invalid) {
+      return;
+    }
 
     const newTrip: Trip = {
       TripId: 0,
@@ -83,24 +99,34 @@ export class AddTripComponent implements OnInit {
       Country: tripData.TripCountry,
       City: tripData.TripCity,
       Description: tripData.TripDescription,
-      StartDate: this.isValidDate(tripData.TripStartDate) ? new Date(tripData.TripStartDate) : new Date(),
-      EndDate: this.isValidDate(tripData.TripEndDate) ? new Date(tripData.TripEndDate) : new Date(),
+      StartDate: this.isValidDate(tripData.TripStartDate)
+        ? new Date(tripData.TripStartDate)
+        : new Date(),
+      EndDate: this.isValidDate(tripData.TripEndDate)
+        ? new Date(tripData.TripEndDate)
+        : new Date(),
       MaxCapacity: Number(tripData.TripCapacity),
       Image: tripData.TripImage,
-      Price: this.changeCurrency(tripData.TripPriceCurrency, Number(tripData.TripPrice)),
+      Price: this.changeCurrency(
+        tripData.TripPriceCurrency,
+        Number(tripData.TripPrice)
+      ),
       Tags: this.tags,
-      Reviews: []
-    }
-    console.log(newTrip);
+      Reviews: [],
+    };
+
     this.tripsService.addTrip(newTrip);
+    this.TripForm.reset();
   }
 
   addTag() {
-    const inputElement = document.getElementById('tag-input') as HTMLInputElement;
+    const inputElement = document.getElementById(
+      'tag-input'
+    ) as HTMLInputElement;
     const tag = inputElement.value;
-    
+
     if (!this.checkTagsCount()) {
-        return;
+      return;
     }
 
     if (tag === '') {
@@ -129,7 +155,6 @@ export class AddTripComponent implements OnInit {
   }
 
   private normalizeTag(tag: string): string {
-
     tag = tag.toLowerCase().trim().replace(/\s/g, '');
 
     if (tag.startsWith('#')) {

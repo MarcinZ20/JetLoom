@@ -95,17 +95,17 @@
 
   <!-- LEFT FILTERS START -->
   <div class="columns">
-    <div class="column is-0-mobile block is-one-fifth">
+    <div class="column is-12-mobile block is-one-fifth">
       <div class="container box has-background-white">
         <p class="title is-4">Filters:</p>
         <hr />
         <div class="field">
           <label class="label">Tags</label>
-          <label class="checkbox m-1">
+          <label *ngFor="let tag of getAllTags()" class="checkbox m-1">
             <input type="checkbox" (change)="addTagToFilters($event)" />
-            Vacation
+            {{ tag }}
           </label>
-          <label class="checkbox m-1 m-1">
+          <!-- <label class="checkbox m-1 m-1">
             <input type="checkbox" (change)="addTagToFilters($event)" />
             Fun
           </label>
@@ -144,7 +144,7 @@
           <label class="checkbox m-1">
             <input type="checkbox" (change)="addTagToFilters($event)" />
             Fall
-          </label>
+          </label> -->
         </div>
         <hr />
         <div class="field">

@@ -7,6 +7,7 @@ import {
   faPlus,
   faMinus,
   faArrowRight,
+  faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { TripsService } from '../services/trips.service';
 import { BasketService } from '../services/basket.service';
@@ -48,6 +49,7 @@ export class TripComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
   faArrowRight = faArrowRight;
+  faArrowLeft = faArrowLeft;
 
   constructor(
     private router: ActivatedRoute,

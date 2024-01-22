@@ -253,14 +253,17 @@
             
             <div class="field is-grouped box">
                 <div class="control">
-                <button class="button is-link"                  type="submit">Submit</button>
+                <button 
+                    class="button is-link" 
+                    type="submit">Submit</button>
                 </div>
                 <div class="control">
                 <button class="button is-link is-light">Cancel</button>
                 </div>
             </div>
         </div>
-        <div class="column box" id="main-container">
+        <div class="column box is-hidden-mobile" id="main-container"
+        [ngStyle]="{'background-image': 'linear-gradient(to right, rgb(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1)), url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWVkaXRhcmFuaWFuJTIwc2VhfGVufDB8fDB8fHww)'}">
             <p class="title is-1 has-text-grey-dark">Your dream vacation starts here ...</p>
         </div>
     </div>
